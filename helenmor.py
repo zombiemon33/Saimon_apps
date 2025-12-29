@@ -74,6 +74,7 @@ if menu == "Inicio":
      st.info("Selecciona un módulo en el menú lateral")
 
 # ================== GASES ARTERIALES ==================
+
 elif menu == "Gases arteriales":
 
     st.header("Análisis de Gases Arteriales")
@@ -127,6 +128,11 @@ elif menu == "Gases arteriales":
            ("alcalosis respiratoria" in dx and "alcalosis metabolica" in dx):
             dx = ["Trastorno mixto"]
             causas = "Alteraciones ácido–base coexistentes."
+
+
+        # -------- SIN TRASTORNOS --------
+        if 7.35 <= ph <= 7.45 and 35 <= pco2 <= 45 and 22 <= hco3 <= 26:
+           dx.append("Sin estado ácido base alterado")
 
         # -------- COMPENSACIÓN RESPIRATORIA --------
         if dx[0] in ["acidosis respiratoria", "alcalosis respiratoria"]:
@@ -810,4 +816,6 @@ elif menu == "Sodio corregido":
 st.markdown("---")
 st.caption("HELEN M.O.R · Medicina & Ingeniería · Uso académico")
 st.caption("Hecho por Simón Tirado Posada")
+
+
 

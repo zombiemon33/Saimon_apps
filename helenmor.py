@@ -133,6 +133,7 @@ elif menu == "Gases arteriales":
         # -------- SIN TRASTORNOS --------
         if 7.35 <= ph <= 7.45 and 35 <= pco2 <= 45 and 22 <= hco3 <= 26:
            dx.append("Sin estado ácido base alterado")
+           causas = causas + "Todo gucci"
 
         # -------- COMPENSACIÓN RESPIRATORIA --------
         if dx[0] in ["acidosis respiratoria", "alcalosis respiratoria"]:
@@ -816,6 +817,7 @@ elif menu == "Sodio corregido":
 st.markdown("---")
 st.caption("HELEN M.O.R · Medicina & Ingeniería · Uso académico")
 st.caption("Hecho por Simón Tirado Posada")
+
 
 
 

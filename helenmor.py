@@ -133,10 +133,10 @@ elif menu == "Gases arteriales":
         # -------- SIN TRASTORNOS --------
         if 7.35 <= ph <= 7.45 and 35 <= pco2 <= 45 and 22 <= hco3 <= 26:
            dx.append("Sin estado ácido base alterado")
-           causas = causas + "Todo gucci"
 
         # -------- COMPENSACIÓN RESPIRATORIA --------
-        if dx[0] in ["acidosis respiratoria", "alcalosis respiratoria"]:
+        try:
+         if dx[0] in ["acidosis respiratoria", "alcalosis respiratoria"]:
             eb_esperado = (pco2 - 40) * 0.4
 
             if abs(eb) < 2:
@@ -149,23 +149,33 @@ elif menu == "Gases arteriales":
                 else:
                     dx.append("con acidosis metabólica agregada")
 
+        except:
+            pass
+
         # -------- COMPENSACIÓN METABÓLICA --------
-        if dx[0] == "acidosis metabolica":
+        try:
+         if dx[0] == "acidosis metabolica":
             pco2_esp = (1.5 * hco3) + 8
             dx.append("compensada" if abs(pco2 - pco2_esp) <= 2 else "no compensada")
 
-        if dx[0] == "alcalosis metabolica":
+         if dx[0] == "alcalosis metabolica":
             pco2_esp = (0.7 * hco3) + 21
             dx.append("compensada" if abs(pco2 - pco2_esp) <= 2 else "no compensada")
+        except:
+            pass
 
         # -------- ANIÓN GAP --------
-        if "acidosis" in dx[0]:
+        try:
+         if "acidosis" in dx[0]:
             ag = na - (cl + hco3)
             if ag > 12:
                 dx.append("con anión gap elevado")
                 causas += "Cetoacidosis, acidosis láctica, insuficiencia renal. "
             else:
                 dx.append("hiperclorémica")
+
+        except:
+            pass
 
         # -------- OXIGENACIÓN --------
         paffi = po2 / fio2
@@ -175,6 +185,14 @@ elif menu == "Gases arteriales":
             dx.append("hipoxemia leve")
         else:
             dx.append("SDRA moderado o grave")
+
+        try:
+         if dx[0] == "" or dx[0] not in ["alcalosis respiratoria","alcalosis metabolica","acidosis metabólica","acidosis respiratoria", "trastorno mixto","Sin estado ácido base alterado"]:
+             dx.append(". No encuentro un diagnóstico claro, ¿Estas simulando?")
+             causas = causas + "Ninguna"
+
+        except:
+            pass
 
         # -------- RESULTADOS --------
         st.success("Diagnóstico")
@@ -817,6 +835,7 @@ elif menu == "Sodio corregido":
 st.markdown("---")
 st.caption("HELEN M.O.R · Medicina & Ingeniería · Uso académico")
 st.caption("Hecho por Simón Tirado Posada")
+
 
 
 

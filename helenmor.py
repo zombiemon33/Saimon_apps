@@ -949,7 +949,7 @@ elif menu == "liquidospediatria":
               st.info("Por cada litro de ss al " + str(ss) + " %, subo " + str(round(adro,2)) + " meq de la natremia del paciente.")
 
               st.caption("Unos tips para que enfoques al bebé")
-              st.image("images/hiponatremia.png",width=360)
+              st.image("images/hiponatremia.png",width=800)
               st.caption("Imagen tomada de la presentación de la pediatra NATALY OSPINA GARCÍA")
 
             elif nap > 155:
@@ -973,7 +973,7 @@ elif menu == "liquidospediatria":
                st.info("Por cada litro de ss al " + str(ss) + " %, bajo " + str(round(adro,2)) + " meq de la natremia del paciente.")
 
                st.caption("Unos tips para que enfoques al bebé")
-               st.image("images/hipernatremia.png",width=360)
+               st.image("images/hipernatremia.png",width=800)
                st.caption("Imagen tomada de la presentación de la pediatra NATALY OSPINA GARCÍA")
 
             else:
@@ -988,7 +988,7 @@ elif menu == "liquidospediatria":
         st.info("Aquí vamos a corregir los valores bajos de potasio del bebé")
 
         kpa = st.number_input("Ingresa el K sérico del paciente: ", min_value=0.0, max_value=20.0, step= 0.1, value= 4.0)
-        peso = st.number_input("Ingresa el peso del paciente en kg: ",  min_value=0.0, max_value=90.0, step= 0.1, value= 4.0)
+        peso = st.number_input("Ingresa el peso del paciente en kg: ",  min_value=0.0, max_value=100.0, step= 0.1, value= 4.0)
 
         if kpa < 2.5:
                 dosis = st.number_input("Ingresa la dosis deseada 0.5-1 meq/kg/día: ", min_value=0.5, max_value=1.0, step=0.1)
@@ -1013,7 +1013,7 @@ elif menu == "liquidospediatria":
                 
 
                 st.caption("Unos tips para que enfoques al bebé")
-                st.image("images/hipokalemia.png",width=360)
+                st.image("images/hipokalemia.png",width=800)
                 st.caption("Imagen tomada de la presentación de la pediatra NATALY OSPINA GARCÍA")
                 
             if kpa > 5.1:
@@ -1021,7 +1021,7 @@ elif menu == "liquidospediatria":
                 st.warning("Tiene una hiperKalemia")
 
                 st.caption("Aquí te doy un enfoque de tratamiento")
-                st.image("images/hiperkalemia.png",width=360)
+                st.image("images/hiperkalemia.png",width=800)
                 st.caption("Imagen tomada de la presentación de la pediatra NATALY OSPINA GARCÍA")
 
             if 3.5 <= kpa <= 5.1:

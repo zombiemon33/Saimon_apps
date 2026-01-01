@@ -1,7 +1,2 @@
-<<<<<<< HEAD
 streamlit
 python-dateutil
-=======
-streamlit
-python-dateutil
->>>>>>> 44d752595a3993ee2267c494539e3df66fc6f89d

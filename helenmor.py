@@ -11,6 +11,7 @@ if "menu" not in st.session_state:
 if "submodulo" not in st.session_state:
     st.session_state.submodulo = "liquidospediatria"
 
+
 st.set_page_config(
     page_title="HELEN M.O.R",
     page_icon="🩺"
@@ -989,6 +990,10 @@ elif menu == "liquidospediatria":
         kpa = st.number_input("Ingresa el K sérico del paciente: ", min_value=0.0, max_value=20.0, step= 0.1, value= 4.0)
         peso = st.number_input("Ingresa el peso del paciente en kg: ",  min_value=0.0, max_value=90.0, step= 0.1, value= 4.0)
 
+        if kpa < 2.5:
+                dosis = st.number_input("Ingresa la dosis deseada 0.5-1 meq/kg/día: ", min_value=0.5, max_value=1.0, step=0.1)
+                vi = st.number_input("Ingresa la velocidad de infusión de 0.25-0.5 meq/kg/h: ", min_value=0.25, max_value=0.5, step=0.1)
+
         if st.button("Calcular disKalemia"):
             
             if 2.5 <= kpa < 3.5:
@@ -998,10 +1003,6 @@ elif menu == "liquidospediatria":
 
 
             if kpa < 2.5:
-                dosis = st.number_input("Ingresa la dosis deseada 0.5-1 meq/kg/día: ", min_value=0.5, max_value=1.0, step=0.1, value= 0.5)
-                vi = st.number_input("Ingresa la velocidad de infusión de 0.25-0.5 meq/kg/h: ", min_value=0.25, max_value=0.5, step=0.1, value= 0.25)
-
-
 
                 st.success("Diluir " + str(round((dosis*peso/2),1)) + " cc de Katrol en " + str(round((25*peso*dosis),1)) + " a "
                                + str(round(((100/6)*peso*dosis),1)) + " cc de ss 0.9 % y pasar en " + str(round((dosis/vi),1)) + " h por vía periférica.")

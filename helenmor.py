@@ -4,12 +4,17 @@ from dateutil.relativedelta import relativedelta
 
 # ================== CONFIGURACIÓN GENERAL ==================
 
+#PARA CREAR UN MODULO CON SUBMODULOS, HAY QUE INICIALIZAR EL SUBMODULO, Y LUEGO EL SESSION STATE EN USAR EL MENÚ
+
 # ---------- INICIALIZAR ESTADO ----------
 if "menu" not in st.session_state:
     st.session_state.menu = "Inicio"
 
 if "submodulo" not in st.session_state:
     st.session_state.submodulo = "liquidospediatria"
+
+if "nefromodulo" not in st.session_state:
+    st.session_state.nefromodulo = "nefro"
 
 
 st.set_page_config(
@@ -50,8 +55,8 @@ if st.sidebar.button("⚖️ IMC"):
 if st.sidebar.button("🚬 Tabaquismo (IPA)"):
     st.session_state.menu = "Indice paquete-año"
 
-if st.sidebar.button("🧴 TFG"):
-    st.session_state.menu = "TFG"
+if st.sidebar.button("🧴 Nefrología"):
+    st.session_state.menu = "nefro"
 
 if st.sidebar.button("👶Liquidos pediatría"):
     st.session_state.menu = "liquidospediatria"
@@ -60,6 +65,8 @@ if st.sidebar.button("👶Liquidos pediatría"):
 menu = st.session_state.menu
 
 submodulo = st.session_state.submodulo
+
+nefromodulo = st.session_state.nefromodulo
 
 # ================== INICIO ==================
 if menu == "Inicio":
@@ -265,70 +272,160 @@ elif menu == "IMC":
             )      
 
 
-# ================== CALCULAR TFG ==================
+# ================== SECCION DE NEFROLOGIA ==========
 
-elif menu == "TFG":
+elif menu == "nefro":
+    
+    col5, col6 = st.columns([1,3])
 
-    st.header("Tasa de Filtración Glomerular (CKD-EPI)")
+    with col5:
+        st.image("images/kidneys.png",width=360)
 
-    sexo = st.radio("Selecciona el sexo", ["Mujer", "Hombre"])
+    with col6:
+        st.header("Modulo de nefrología")
+        st.info("Selecciona el cálculo que necesitas")
 
-    creatinina = st.number_input("Creatinina sérica (mg/dL)", value = 0.9, step= 1.0)
-    edad = st.number_input("Edad (años)", step = 1)
+    st.selectbox("Selecciona el cálculo",("KDIGO")
+                 , key="nefromodulo")
+    
+    #AQUI SE CALCULA EL KDIGO CON LA TFG
+    if st.session_state.nefromodulo == "KDIGO":
+       
+       st.header("KDIGO")
+       st.info("Vamos a calcular la clasificación KDIGO para el riesgo de enfermedad renal crónica (ERC)")
+       st.write("La ERC se define como anomalías de la estructura o función renal, presentes durante un mínimo de 3 meses, con implicaciones para la salud.")
+       st.image("images/kdigo.png",width=600)
 
-    if st.button("Calcular TFG"):
+       col1, col2 = st.columns(2)
 
-        try:
+       with col1:
+           sexo = st.radio("Selecciona el sexo", ["Mujer", "Hombre"])
+           creatinina = st.number_input("Creatinina sérica (mg/dL)", value = 0.9, step= 1.0)
+           albuminuria = st.number_input("Ingrese el valor de albuminuria")
+
+       with col2:
+           raza = st.radio("Selecciona la raza",["Blanca","Negra"])                
+           edad = st.number_input("Edad (años)", step = 1)
+           unidades = st.radio("¿En qué unidades está reportada la albuminuria", ["mg/g","mg/mmol"])
+
+
+       if st.button("Calcular TFG"):
+           
+           try:
 
             # ================= MUJER =================
-            if sexo == "Mujer":
+                if sexo == "Mujer":
 
-                if creatinina <= 0.7:
+                  if creatinina <= 0.7:
                     tfg = 144 * ((creatinina / 0.7) ** -0.329) * ((0.993) ** edad)
                     tfgblack = tfg * 1.159
-                else:
+                  else:
                     tfg = 144 * ((creatinina / 0.7) ** -1.209) * ((0.993) ** edad)
                     tfgblack = tfg * 1.159
 
             # ================= HOMBRE =================
-            else:
+                else:
 
-                if creatinina <= 0.9:
+                  if creatinina <= 0.9:
                     tfg = 141 * ((creatinina / 0.9) ** -0.411) * ((0.993) ** edad)
                     tfgblack = tfg * 1.159
-                else:
+                  else:
                     tfg = 141 * ((creatinina / 0.9) ** -1.209) * ((0.993) ** edad)
                     tfgblack = tfg * 1.159
 
             # ================= RESULTADOS =================
-            st.info(f"TFG Raza blanca: {round(tfg,1)} mL/min/1.73 m²")
-            st.info(f"TFG Raza negra: {round(tfgblack,1)} mL/min/1.73 m²")
 
-            # ================= ESTADIOS =================
-            if tfg >= 90:
-                st.success("Etapa 1. Normal")
-                #estadio = "Etapa 1. Normal."
-            elif 89 >= tfg >= 60:
-                st.success("Estadío 2. Leve")
-                #estadio = "Estadío 2. Leve."
-            elif 59 >= tfg >= 45:
-                st.warning("Estadío 3a. Leve a moderado")
-                #estadio = "Estadío 3a. Leve a moderado."
-            elif 44 >= tfg >= 30:
-                st.warning("Estadío 3b. Moderado a severo")
-                #estadio = "Estadío 3b. Moderado a severo."
-            elif 29 >= tfg >= 15:
-                st.error("Estadío 4. Grave")
-                #estadio = "Estadío 4. Grave."
-            else:
-                st.error("Estadío 5. Falla renal. Requiere diálisis")
-               # estadio = "Estadío 5. Falla renal. Requiere diálisis."
+                if unidades == "mg/mmol":
+                    albuminuria = albuminuria*10
 
-        except:
-            st.error("Ingreso de datos erróneo. Inténtalo de nuevo.")
+                
+                if raza == "Negra":
+                    tfg = tfgblack
 
-#stwarning, sterror colorean las cosas. stinfo colorea el texto en azul
-        
+                       #AQUI VAMOS A PONER LOS DATOS DE LOS BLANCOS
+
+                st.info(f"TFG: {round(tfg,1)} mL/min/1.73 m²")
+                              # ================= ESTADIOS =================
+                      #A1
+                if tfg >= 90 and albuminuria < 30:
+                        st.success("C G1 A1")
+                        st.write("Bajo riesgo de ERC")
+
+                if  60 <= tfg <= 89 and albuminuria < 30:
+                        st.success("C G2 A1")
+                        st.write("Bajo riesgo de ERC")
+
+                if  45 <= tfg <= 59 and albuminuria < 30:
+                        st.warning("C G3a A1")
+                        st.write("Riesgo moderadamente incrementado")
+
+                if  30 <= tfg <= 44 and albuminuria < 30:
+                        st.warning("C G3b A1")
+                        st.write("ALTO RIESGO")
+
+                if  15 <= tfg <= 29 and albuminuria < 30:
+                        st.error("C G4 A1")
+                        st.write("MUY ALTO RIESGO")
+
+                if  tfg < 15  and albuminuria < 30:
+                        st.error("C G5 A1")
+                        st.write("MUY ALTO RIESGO")
+
+                      #A2
+                if tfg >= 90 and (30 <= albuminuria <= 300):
+                        st.warning("C G1 A2")
+                        st.write("Riesgo moderadamente incrementado")
+
+                if  60 <= tfg <= 89 and (30 <= albuminuria <= 300):
+                        st.warning("C G2 A2")
+                        st.write("Riesgo moderadamente incrementado")
+
+                if  45 <= tfg <= 59 and (30 <= albuminuria <= 300):
+                        st.warning("C G3a A2")
+                        st.write("ALTO RIESGO")
+
+                if  30 <= tfg <= 44 and (30 <= albuminuria <= 300):
+                        st.error("C G3b A2")
+                        st.write("MUY ALTO RIESGO")
+
+                if  15 <= tfg <= 29 and (30 <= albuminuria <= 300):
+                        st.error("C G4 A2")
+                        st.write("MUY ALTO RIESGO")
+
+                if   tfg < 15  and (30 <= albuminuria <= 300):
+                        st.error("C G5 A2")
+                        st.write("MUY ALTO RIESGO")
+
+                      #A3
+                if tfg >= 90 and (albuminuria > 300):
+                        st.warning("C G1 A3")
+                        st.write("ALTO RIESGO")
+
+                if  60 <= tfg <= 89 and (albuminuria > 300):
+                          st.warning("C G2 A3")
+                          st.write("ALTO RIESGO")
+
+                if  45 <= tfg <= 59 and (albuminuria > 300):
+                        st.error("C G3a A3")
+                        st.write("MUY ALTO RIESGO")
+
+                if  30 <= tfg <= 44 and (albuminuria > 300):
+                        st.error("C G3b A3")
+                        st.write("MUY ALTO RIESGO")
+
+                if  15 <= tfg <= 29 and (albuminuria > 300):
+                        st.error("C G4 A3")
+                        st.write("MUY ALTO RIESGO")
+
+                if  tfg < 15 and (albuminuria > 300):
+                        st.error("C G5 A3")
+                        st.write("MUY ALTO RIESGO")
+
+           except:
+              st.error("Ingreso de datos erróneo. Inténtalo de nuevo.")
+
+
+#stwarning, sterror colorean las cosas. stinfo colorea el texto en azul  
 
 # ================== CALCULAR FPP  ==================
 

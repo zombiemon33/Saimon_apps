@@ -91,7 +91,7 @@ if menu == "Inicio":
     col1,col2 = st.columns([1,3])
 
     with col1:
-        st.image("helen_doctora.png",width=600)
+        st.image("helen_doctora.png",width=180)
 
     with col2:
      st.header("HELEN M.O.R.")
@@ -116,7 +116,7 @@ elif menu == "respiratorio":
     col1, col2 = st.columns([1,3])
 
     with col1:
-        st.image("images/lungs.png",width=360)
+        st.image("images/lungs.png",width=180)
 
     with col2:
         st.header("Modulo de sistema respiratorio")
@@ -319,7 +319,7 @@ elif menu == "metabolico":
     col1, col2 = st.columns([1,3])
 
     with col1:
-        st.image("images/liver.png",width=360)
+        st.image("images/liver.png",width=180)
 
     with col2:
         st.header("Modulo de sistema metabólico-endocrino")
@@ -568,7 +568,7 @@ elif menu == "nefro":
     col5, col6 = st.columns([1,3])
 
     with col5:
-        st.image("images/kidneys.png",width=360)
+        st.image("images/kidneys.png",width=180)
 
     with col6:
         st.header("Modulo de nefrología")
@@ -730,7 +730,7 @@ elif menu == "gineco":
     col1, col2 = st.columns([1,3])
 
     with col1:
-        st.image("images/gineco.png",width=360)
+        st.image("images/gineco.png",width=180)
 
     with col2:
         st.header("Modulo de ginecobstetricia")
@@ -835,7 +835,7 @@ elif menu == "cardio":
     col1, col2 = st.columns([1,3])
 
     with col1:
-        st.image("images/heart.png",width=400)
+        st.image("images/heart.png",width=180)
 
     with col2:
         st.header("Modulo de Cardiología")
@@ -1180,7 +1180,7 @@ elif menu == "hemato":
     col1, col2 = st.columns([1,3])
 
     with col1:
-        st.image("images/hemato.png",width=360)
+        st.image("images/hemato.png",width=180)
 
     with col2:
         st.header("Modulo de hematología")
@@ -1276,7 +1276,7 @@ elif menu == "pediatria":
     col1, col2 = st.columns([1,3])
 
     with col1:
-        st.image("images/pediatra.png",width=360)
+        st.image("images/pediatra.png",width=180)
 
     with col2:
         st.header("Cálculos en pediatría")

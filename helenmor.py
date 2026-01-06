@@ -11,11 +11,25 @@ if "menu" not in st.session_state:
     st.session_state.menu = "Inicio"
 
 if "submodulo" not in st.session_state:
-    st.session_state.submodulo = "liquidospediatria"
+    st.session_state.submodulo = "pediatria"
 
 if "nefromodulo" not in st.session_state:
     st.session_state.nefromodulo = "nefro"
 
+if "cardiomodulo" not in st.session_state:
+    st.session_state.cardiomodulo = "cardio"
+
+if "respimodulo" not in st.session_state:
+    st.session_state.respimodulo = "respiratorio"
+
+if "metamodulo" not in st.session_state:
+    st.session_state.metamodulo = "metabolico"
+
+if "hematomodulo" not in st.session_state:
+    st.session_state.hematomodulo = "hemato"
+
+if "ginecomodulo" not in st.session_state:
+    st.session_state.ginecomodulo = "gineco"
 
 st.set_page_config(
     page_title="HELEN M.O.R",
@@ -31,35 +45,26 @@ st.sidebar.markdown("### Módulos clínicos")
 if st.sidebar.button("🏠 Home"):
     st.session_state.menu = "Inicio"
 
-if st.sidebar.button("🧪 Gases arteriales"):
-    st.session_state.menu = "Gases arteriales"
+if st.sidebar.button("🫁 Respiratorio"):
+    st.session_state.menu = "respiratorio"
 
-if st.sidebar.button("🫀 Hipertensión arterial"):
-    st.session_state.menu = "HTA"
+if st.sidebar.button("🫀 Cardiovascular"):
+    st.session_state.menu = "cardio"
 
-if st.sidebar.button("🩸 Anemia"):
-    st.session_state.menu = "Clasificación morfológica de la anemia"
+if st.sidebar.button("🟡 Endocrino-metabólico"):
+    st.session_state.menu = "metabolico"
 
-if st.sidebar.button("🟡 Perfil lipídico"):
-    st.session_state.menu = "Perfil lipídico"
-
-if st.sidebar.button("🧂 Sodio corregido"):
-    st.session_state.menu = "Sodio corregido"
-
-if st.sidebar.button("📅 Fecha probable de parto"):
-    st.session_state.menu = "FPP"
-
-if st.sidebar.button("⚖️ IMC"):
-    st.session_state.menu = "IMC"
-
-if st.sidebar.button("🚬 Tabaquismo (IPA)"):
-    st.session_state.menu = "Indice paquete-año"
+if st.sidebar.button("🩸 Hematología"):
+    st.session_state.menu = "hemato"
 
 if st.sidebar.button("🧴 Nefrología"):
     st.session_state.menu = "nefro"
 
-if st.sidebar.button("👶Liquidos pediatría"):
-    st.session_state.menu = "liquidospediatria"
+if st.sidebar.button("🤱🏽👩🏽 Ginecobstetricia"):
+    st.session_state.menu = "gineco"
+
+if st.sidebar.button("👶Pediatría"):
+    st.session_state.menu = "pediatria"
 
 # ---------- USAR EL MENÚ ----------
 menu = st.session_state.menu
@@ -68,12 +73,25 @@ submodulo = st.session_state.submodulo
 
 nefromodulo = st.session_state.nefromodulo
 
-# ================== INICIO ==================
+cardiomodulo = st.session_state.cardiomodulo
+
+respimodulo = st.session_state.respimodulo
+
+hematomodulo = st.session_state.hematomodulo
+
+ginecomodulo = st.session_state.ginecomodulo
+
+
+# ================== INICIO ==========================================
+#=====================================================================
+#=====================================================================
+
+
 if menu == "Inicio":
     col1,col2 = st.columns([1,3])
 
     with col1:
-        st.image("helen_doctora.png",width=180)
+        st.image("helen_doctora.png",width=600)
 
     with col2:
      st.header("HELEN M.O.R.")
@@ -85,194 +103,465 @@ if menu == "Inicio":
     """)
      st.info("Selecciona un módulo en el menú lateral")
 
-# ================== GASES ARTERIALES ==================
 
-elif menu == "Gases arteriales":
 
-    st.header("Análisis de Gases Arteriales")
-    st.write("Ajusta los resultados de los gases arteriales de tu paciente")
 
-    # -------- INPUTS --------
-    ph = st.number_input("pH", 6.8, 7.8,  value=7.4, step=0.01)
-    pco2 = st.number_input("PaCO₂ (mmHg)", 10.0, 100.0, value = 40.0, step=1.0)
-    hco3 = st.number_input("HCO₃⁻ (mEq/L)", 5.0, 45.0, value = 24.0, step=1.0)
-    po2 = st.number_input("PaO₂ (mmHg)", 20.0, 600.0, value = 90.0, step=1.0)
-    fio2 = st.number_input("FiO₂ (%)", 21.0, 100.0, value = 21.0, step=1.0) / 100
-    na = st.number_input("Na⁺ (mEq/L)", 100.0, 180.0, value = 140.0, step=1.0)
-    cl = st.number_input("Cl⁻ (mEq/L)", 60.0, 140.0, value = 100.0, step=1.0)
-    eb = st.number_input("Exceso de base (mmol/L)", -30.0, 30.0, value = 0.0, step=1.0)
 
-    # -------- BOTÓN --------
-    if st.button("Analizar gasometría"):
+# ================== MODULO DE SISTEMA RESPIRATORIO ==================
+#=====================================================================
+#=====================================================================
 
-        dx = []
-        causas = ""
+elif menu == "respiratorio":
 
-        # -------- TRASTORNO PRIMARIO --------
-        if ph < 7.35 and pco2 > 45:
-            dx.append("acidosis respiratoria")
-            causas += "Depresión respiratoria, EPOC, enfermedades neuromusculares. "
+    col1, col2 = st.columns([1,3])
 
-        if ph > 7.45 and pco2 < 35:
-            dx.append("alcalosis respiratoria")
-            causas += "Sepsis, hepatopatía, embarazo, hiperventilación. "
+    with col1:
+        st.image("images/lungs.png",width=360)
 
-        if ph > 7.45 and hco3 > 26:
-            dx.append("alcalosis metabolica")
-            causas += "Vómitos, diuréticos, exceso de mineralocorticoides. "
+    with col2:
+        st.header("Modulo de sistema respiratorio")
+        st.info("Selecciona la herramienta clínica que necesitas en la caja de abajo.")
 
-        if ph < 7.35 and hco3 < 22:
-            dx.append("acidosis metabolica")
+    st.selectbox("Selecciona el cálculo",("Gases arteriales","Indice paquete-año")
+                 , key="respimodulo")
+    
 
-        # -------- pH NORMAL (SOSPECHA MIXTO) --------
-        if 7.35 <= ph <= 7.45:
-            if pco2 < 35 and hco3 < 22:
-                dx.append("alcalosis respiratoria")
-            if pco2 > 45 and hco3 > 26:
+    #AQUI SE CALCULAN LOS GASES ARTERIALES
+    if st.session_state.respimodulo == "Gases arteriales":
+
+
+        st.header("Análisis de Gases Arteriales")
+        st.write("Ajusta los resultados de los gases arteriales de tu paciente")
+
+        # -------- INPUTS --------
+        ph = st.number_input("pH", 6.8, 7.8,  value=7.4, step=0.01)
+        pco2 = st.number_input("PaCO₂ (mmHg)", 10.0, 100.0, value = 40.0, step=1.0)
+        hco3 = st.number_input("HCO₃⁻ (mEq/L)", 5.0, 45.0, value = 24.0, step=1.0)
+        po2 = st.number_input("PaO₂ (mmHg)", 20.0, 600.0, value = 90.0, step=1.0)
+        fio2 = st.number_input("FiO₂ (%)", 21.0, 100.0, value = 21.0, step=1.0) / 100
+        na = st.number_input("Na⁺ (mEq/L)", 100.0, 180.0, value = 140.0, step=1.0)
+        cl = st.number_input("Cl⁻ (mEq/L)", 60.0, 140.0, value = 100.0, step=1.0)
+        eb = st.number_input("Exceso de base (mmol/L)", -30.0, 30.0, value = 0.0, step=1.0)
+
+        # -------- BOTÓN --------
+        if st.button("Analizar gasometría"):
+
+            dx = []
+            causas = ""
+
+            # -------- TRASTORNO PRIMARIO --------
+            if ph < 7.35 and pco2 > 45:
                 dx.append("acidosis respiratoria")
-            if pco2 < 35 and hco3 > 26:
-                dx.extend(["alcalosis respiratoria", "alcalosis metabolica"])
-            if pco2 > 45 and hco3 < 22:
-                dx.extend(["acidosis respiratoria", "acidosis metabolica"])
+                causas += "Depresión respiratoria, EPOC, enfermedades neuromusculares. "
 
-        # -------- MIXTO --------
-        if ("acidosis respiratoria" in dx and "acidosis metabolica" in dx) or \
-           ("alcalosis respiratoria" in dx and "alcalosis metabolica" in dx):
-            dx = ["Trastorno mixto"]
-            causas = "Alteraciones ácido–base coexistentes."
+            if ph > 7.45 and pco2 < 35:
+                dx.append("alcalosis respiratoria")
+                causas += "Sepsis, hepatopatía, embarazo, hiperventilación. "
+
+            if ph > 7.45 and hco3 > 26:
+                dx.append("alcalosis metabolica")
+                causas += "Vómitos, diuréticos, exceso de mineralocorticoides. "
+
+            if ph < 7.35 and hco3 < 22:
+                dx.append("acidosis metabolica")
+
+            # -------- pH NORMAL (SOSPECHA MIXTO) --------
+            if 7.35 <= ph <= 7.45:
+                if pco2 < 35 and hco3 < 22:
+                    dx.append("alcalosis respiratoria")
+                if pco2 > 45 and hco3 > 26:
+                    dx.append("acidosis respiratoria")
+                if pco2 < 35 and hco3 > 26:
+                    dx.extend(["alcalosis respiratoria", "alcalosis metabolica"])
+                if pco2 > 45 and hco3 < 22:
+                    dx.extend(["acidosis respiratoria", "acidosis metabolica"])
+
+            # -------- MIXTO --------
+            if ("acidosis respiratoria" in dx and "acidosis metabolica" in dx) or \
+            ("alcalosis respiratoria" in dx and "alcalosis metabolica" in dx):
+                dx = ["Trastorno mixto"]
+                causas = "Alteraciones ácido–base coexistentes."
 
 
-        # -------- SIN TRASTORNOS --------
-        if 7.35 <= ph <= 7.45 and 35 <= pco2 <= 45 and 22 <= hco3 <= 26:
-           dx.append("Sin estado ácido base alterado")
+            # -------- SIN TRASTORNOS --------
+            if 7.35 <= ph <= 7.45 and 35 <= pco2 <= 45 and 22 <= hco3 <= 26:
+                dx.append("Sin estado ácido base alterado")
 
-        # -------- COMPENSACIÓN RESPIRATORIA --------
-        try:
-         if dx[0] in ["acidosis respiratoria", "alcalosis respiratoria"]:
-            eb_esperado = (pco2 - 40) * 0.4
+            # -------- COMPENSACIÓN RESPIRATORIA --------
+            try:
+                if dx[0] in ["acidosis respiratoria", "alcalosis respiratoria"]:
+                    eb_esperado = (pco2 - 40) * 0.4
 
-            if abs(eb) < 2:
-                dx.append("aguda")
+                    if abs(eb) < 2:
+                        dx.append("aguda")
+                    else:
+                        if abs(eb - eb_esperado) <= 2:
+                            dx.append("crónica compensada")
+                        elif eb > eb_esperado + 2:
+                            dx.append("con alcalosis metabólica agregada")
+                        else:
+                            dx.append("con acidosis metabólica agregada")
+
+            except:
+                pass
+
+            # -------- COMPENSACIÓN METABÓLICA --------
+            try:
+                if dx[0] == "acidosis metabolica":
+                    pco2_esp = (1.5 * hco3) + 8
+                    dx.append("compensada" if abs(pco2 - pco2_esp) <= 2 else "no compensada")
+
+                if dx[0] == "alcalosis metabolica":
+                    pco2_esp = (0.7 * hco3) + 21
+                    dx.append("compensada" if abs(pco2 - pco2_esp) <= 2 else "no compensada")
+            except:
+                pass
+
+            # -------- ANIÓN GAP --------
+            try:
+                if "acidosis" in dx[0]:
+                    ag = na - (cl + hco3)
+                    if ag > 12:
+                        dx.append("con anión gap elevado")
+                        causas += "Cetoacidosis, acidosis láctica, insuficiencia renal. "
+                    else:
+                        dx.append("hiperclorémica")
+
+            except:
+                pass
+
+            # -------- OXIGENACIÓN --------
+            paffi = po2 / fio2
+            if paffi > 300:
+                dx.append("sin hipoxemia")
+            elif 200 < paffi <= 300:
+                dx.append("hipoxemia leve")
             else:
-                if abs(eb - eb_esperado) <= 2:
-                    dx.append("crónica compensada")
-                elif eb > eb_esperado + 2:
-                    dx.append("con alcalosis metabólica agregada")
+                dx.append("SDRA moderado o grave")
+
+            try:
+                if dx[0] == "" or dx[0] not in ["alcalosis respiratoria","alcalosis metabolica","acidosis metabólica","acidosis respiratoria", "trastorno mixto","Sin estado ácido base alterado"]:
+                    dx.append(". No encuentro un diagnóstico claro, ¿Estas simulando?")
+                    causas = causas + "Ninguna"
+
+            except:
+                pass
+
+            # -------- RESULTADOS --------
+            st.success("Diagnóstico")
+            st.write(" ".join(dx))
+
+            st.info("Posibles causas")
+            st.write(causas)
+
+    
+    #AQUI SE CALCULA EL IPA
+    elif st.session_state.respimodulo == "Indice paquete-año":
+
+        st.header("Índice Paquetes-Año (IPA)")
+
+        # ---------- INPUTS ----------
+        ncigarros = st.number_input(
+            "Número de cigarrillos al día",
+            min_value=0,
+            max_value=200,
+            step=1
+        )
+
+        añosfuma = st.text_input(
+            "Años fumando (o rango de edades, ej: 18-35)"
+        )
+
+        # ---------- FUNCIÓN RESTA ----------
+        def resta(dato):
+            x = dato.split("-")
+            a = int(x[1]) - int(x[0])
+            return a
+
+        # ---------- BOTÓN ----------
+        if st.button("Calcular IPA"):
+
+            try:
+                # ---------- Años fumando ----------
+                if "-" in añosfuma:
+                    años = resta(añosfuma)
                 else:
-                    dx.append("con acidosis metabólica agregada")
+                    años = float(añosfuma.replace(",", ".").replace(" ", ""))
 
-        except:
-            pass
+                # ---------- Cálculo IPA ----------
+                ipa = (ncigarros * años) / 20
 
-        # -------- COMPENSACIÓN METABÓLICA --------
-        try:
-         if dx[0] == "acidosis metabolica":
-            pco2_esp = (1.5 * hco3) + 8
-            dx.append("compensada" if abs(pco2 - pco2_esp) <= 2 else "no compensada")
+                st.success(f"IPA: {round(ipa,2)} paquetes/año")
 
-         if dx[0] == "alcalosis metabolica":
-            pco2_esp = (0.7 * hco3) + 21
-            dx.append("compensada" if abs(pco2 - pco2_esp) <= 2 else "no compensada")
-        except:
-            pass
+                # ---------- Clasificación ----------
+                if ipa < 5:
+                    st.info("Grado de tabaquismo: Leve.")
+                elif 5 <= ipa <= 15:
+                    st.warning("Grado de tabaquismo: Moderado.")
+                elif 16 <= ipa <= 25:
+                    st.error("Grado de tabaquismo: Grave.")
+                elif ipa > 25:
+                    st.error("Grado de tabaquismo: Muy grave.")
 
-        # -------- ANIÓN GAP --------
-        try:
-         if "acidosis" in dx[0]:
-            ag = na - (cl + hco3)
-            if ag > 12:
-                dx.append("con anión gap elevado")
-                causas += "Cetoacidosis, acidosis láctica, insuficiencia renal. "
-            else:
-                dx.append("hiperclorémica")
-
-        except:
-            pass
-
-        # -------- OXIGENACIÓN --------
-        paffi = po2 / fio2
-        if paffi > 300:
-            dx.append("sin hipoxemia")
-        elif 200 < paffi <= 300:
-            dx.append("hipoxemia leve")
-        else:
-            dx.append("SDRA moderado o grave")
-
-        try:
-         if dx[0] == "" or dx[0] not in ["alcalosis respiratoria","alcalosis metabolica","acidosis metabólica","acidosis respiratoria", "trastorno mixto","Sin estado ácido base alterado"]:
-             dx.append(". No encuentro un diagnóstico claro, ¿Estas simulando?")
-             causas = causas + "Ninguna"
-
-        except:
-            pass
-
-        # -------- RESULTADOS --------
-        st.success("Diagnóstico")
-        st.write(" ".join(dx))
-
-        st.info("Posibles causas")
-        st.write(causas)
+            except Exception:
+                st.error("Ups, error al ingresar los datos. Inténtalo de nuevo.")
 
 
 
-# ================== CALCULAR IMC ==================
-elif menu == "IMC":
-    st.header("Calcula el IMC")
-    st.info("Introduce tu peso y tu talla.")
-
-    masa = st.number_input("Masa (kg)")
-    estatura = st.number_input("Estatura (m)")
-
-    if st.button("Calcular IMC"):
-
-        imc = masa / (estatura**2)
-        st.write("IMC es " + str(round(imc,2)) + "Kg/m2")
-
-        if imc < 18.5:
-            st.write("~Su clasificación corresponde a: Delgadez o bajo peso.")
-            st.write(
-                "Te recomendamos subir "
-                + str(round(-masa + 21.7 * (estatura ** 2), 2))
-                + " kg."
-            )
-
-        elif 18.5 <= imc <= 24.9:
-            st.write("~Su clasificación corresponde a: Peso normal o saludable.")
-
-        elif 25.0 <= imc <= 29.9:
-            st.write("~Su clasificacion corresponde a: Sobrepeso.")
-            st.write(
-                "Te recomendamos bajar "
-                + str(round(masa - 21.7 * (estatura ** 2), 2))
-                + " kg."
-            )
-
-        elif 30 <= imc <= 34.9:
-            st.write("~Su clasificacion corresponde a: Obesidad I o moderada.")
-            st.write(
-                "Te recomendamos bajar "
-                + str(round(masa - 21.7 * (estatura ** 2), 2))
-                + " kg."
-            )
-
-        elif 35 <= imc <= 39.9:
-            st.write("~Su clasificacion corresponde a: Obesidad II o severa.")
-            st.write(
-                "Te recomendamos bajar "
-                + str(round(masa - 21.7 * (estatura ** 2), 2))
-                + " kg."
-            )
-
-        elif imc >= 40.0:
-            st.write("~Su clasificacion corresponde a: Obesidad III o mórbida.")
-            st.write(
-                "Te recomendamos bajar "
-                + str(round(masa - 21.7 * (estatura ** 2), 2))
-                + " kg."
-            )      
 
 
-# ================== SECCION DE NEFROLOGIA ==========
+# ================== SISTEMA METABÓLICO-ENDOCRINO ==================
+#=====================================================================
+#=====================================================================
+
+elif menu == "metabolico":
+
+    col1, col2 = st.columns([1,3])
+
+    with col1:
+        st.image("images/liver.png",width=360)
+
+    with col2:
+        st.header("Modulo de sistema metabólico-endocrino")
+        st.info("Selecciona la herramienta clínica que necesitas en la caja de abajo.")
+
+    st.selectbox("Selecciona el cálculo",("IMC","Perfil lipídico","Sodio corregido")
+                 , key="metamodulo")
+    
+    
+    #AQUI SE CALCULA EL IMC
+    if st.session_state.metamodulo == "IMC":
+
+
+        st.header("Calcula el IMC")
+        st.info("Introduce tu peso y tu talla.")
+
+        masa = st.number_input("Masa (kg)")
+        estatura = st.number_input("Estatura (m)")
+
+        if st.button("Calcular IMC"):
+
+            imc = masa / (estatura**2)
+            st.write("IMC es " + str(round(imc,2)) + "Kg/m2")
+
+            if imc < 18.5:
+                st.write("~Su clasificación corresponde a: Delgadez o bajo peso.")
+                st.write(
+                    "Te recomendamos subir "
+                    + str(round(-masa + 21.7 * (estatura ** 2), 2))
+                    + " kg."
+                )
+
+            elif 18.5 <= imc <= 24.9:
+                st.write("~Su clasificación corresponde a: Peso normal o saludable.")
+
+            elif 25.0 <= imc <= 29.9:
+                st.write("~Su clasificacion corresponde a: Sobrepeso.")
+                st.write(
+                    "Te recomendamos bajar "
+                    + str(round(masa - 21.7 * (estatura ** 2), 2))
+                    + " kg."
+                )
+
+            elif 30 <= imc <= 34.9:
+                st.write("~Su clasificacion corresponde a: Obesidad I o moderada.")
+                st.write(
+                    "Te recomendamos bajar "
+                    + str(round(masa - 21.7 * (estatura ** 2), 2))
+                    + " kg."
+                )
+
+            elif 35 <= imc <= 39.9:
+                st.write("~Su clasificacion corresponde a: Obesidad II o severa.")
+                st.write(
+                    "Te recomendamos bajar "
+                    + str(round(masa - 21.7 * (estatura ** 2), 2))
+                    + " kg."
+                )
+
+            elif imc >= 40.0:
+                st.write("~Su clasificacion corresponde a: Obesidad III o mórbida.")
+                st.write(
+                    "Te recomendamos bajar "
+                    + str(round(masa - 21.7 * (estatura ** 2), 2))
+                    + " kg."
+                )      
+
+    #AQUI SE CALCULA EL PERFIL LIPÍDICO
+    elif st.session_state.metamodulo == "Perfil lipídico":
+
+        st.header("Perfil lipídico (LDL, HDL, Triglicéridos)")
+        st.info("Usamos la ecuación de Friedewald utilizada para estimar LDL")
+
+        sexo = st.radio("Sexo biológico", ["Hombre", "Mujer"])
+
+        colesteroltotal = st.number_input(
+            "Colesterol total (mg/dL)",
+            min_value=0.0,
+            step=1.0
+        )
+
+        hdl = st.number_input(
+            "Colesterol HDL (mg/dL)",
+            min_value=0.0,
+            step=1.0
+        )
+
+        trigliceridos = st.number_input(
+            "Triglicéridos (mg/dL)",
+            min_value=0.0,
+            step=1.0
+        )
+
+        if st.button("Calcular perfil lipídico"):
+
+            try:
+                # ---------- Cálculo LDL (Friedewald) ----------
+                ldl = colesteroltotal - hdl - (trigliceridos / 5)
+
+                st.success(f"LDL: {round(ldl,2)} mg/dL")
+
+                # ---------- Interpretación LDL ----------
+                if ldl >= 190:
+                    st.error(
+                        "Implica riesgo mayor y manejo farmacológico. "
+                        "No necesitas usar tablas para calcular el riesgo."
+                    )
+                elif 160 <= ldl <= 189:
+                    st.warning(
+                        "Colesterol LDL alto. Se sugiere manejo con estatinas "
+                        "de moderada intensidad."
+                    )
+                elif 130 <= ldl <= 159:
+                    st.warning("Colesterol LDL por encima del rango normal.")
+                elif 100 <= ldl <= 129:
+                    st.info("Colesterol LDL casi óptimo. Entre más bajo mejor :)")
+                elif ldl < 100:
+                    st.success("Colesterol LDL óptimo (lo mejor para la salud).")
+
+                # ---------- HDL (dependiente de sexo) ----------
+                if sexo == "Hombre":
+                    if hdl >= 60:
+                        st.success(
+                            f"{round(hdl,2)} mg/dL. HDL protector contra enfermedad cardiovascular."
+                        )
+                    elif 40 <= hdl <= 59:
+                        st.info(
+                            f"{round(hdl,2)} mg/dL. HDL en rango límite inferior."
+                        )
+                    elif hdl < 40:
+                        st.error(
+                            f"{round(hdl,2)} mg/dL. Factor de riesgo cardiovascular."
+                        )
+
+                if sexo == "Mujer":
+                    if hdl >= 60:
+                        st.success(
+                            f"{round(hdl,2)} mg/dL. HDL protector contra enfermedad cardiovascular."
+                        )
+                    elif 50 <= hdl <= 59:
+                        st.info(
+                            f"{round(hdl,2)} mg/dL. HDL en rango límite inferior."
+                        )
+                    elif hdl < 50:
+                        st.error(
+                            f"{round(hdl,2)} mg/dL. Factor de riesgo cardiovascular."
+                        )
+
+                # ---------- Colesterol total ----------
+                if colesteroltotal < 200:
+                    st.success(
+                        f"{round(colesteroltotal,2)} mg/dL. Colesterol total deseable."
+                    )
+                elif 200 <= colesteroltotal <= 239:
+                    st.warning(
+                        f"{round(colesteroltotal,2)} mg/dL. Colesterol total por encima del rango normal."
+                    )
+                elif colesteroltotal >= 240:
+                    st.error(
+                        f"{round(colesteroltotal,2)} mg/dL. Colesterol total alto."
+                    )
+
+                # ---------- Validaciones Friedewald ----------
+                if trigliceridos >= 400 or trigliceridos <= 50:
+                    st.warning(
+                        "La fórmula de Friedewald no es tan precisa para este "
+                        "valor de triglicéridos (> 400 o < 50)."
+                    )
+
+                if ldl < 0:
+                    st.error("Ups, ingresa los datos nuevamente.")
+
+            except Exception:
+                st.error("Ups, inténtalo de nuevo.")
+
+
+    elif st.session_state.metamodulo == "Sodio corregido":
+
+        st.header("Sodio corregido y osmolaridad efectiva")
+
+        sodioserico = st.number_input(
+            "Sodio sérico (mEq/L)",
+            min_value=0.0,
+            value= 140.0,
+            step=1.0
+        )
+
+        glucosa = st.number_input(
+            "Glucosa sérica (mg/dL)",
+            min_value=0.0,
+            value=90.0,
+            step=1.0
+        )
+
+        if st.button("Calcular sodio corregido"):
+
+            try:
+                # ---------- SODIO CORREGIDO ----------
+                if glucosa >= 400:
+                    sodiocorregido = round(
+                        sodioserico + 2.4 * ((glucosa / 100) - 1),
+                        2
+                    )
+
+                elif 400 > glucosa >= 100:
+                    sodiocorregido = round(
+                        sodioserico + 1.6 * ((glucosa / 100) - 1),
+                        2
+                    )
+
+                else:
+                    sodiocorregido = sodioserico
+
+                st.success(f"Na corregido: {sodiocorregido} mEq/L")
+
+                # ---------- OSMOLARIDAD EFECTIVA ----------
+                osm_efectiva = (2 * sodiocorregido) + (glucosa / 18)
+
+                st.info(
+                    f"Osmolaridad efectiva: {round(osm_efectiva,2)} mOsm/L"
+                )
+
+                # ---------- INTERPRETACIÓN ----------
+                if osm_efectiva > 290:
+                    st.warning("Estado hiperosmolar.")
+
+                elif osm_efectiva < 275:
+                    st.warning("Estado hipoosmolar o hipotónico.")
+
+                else:
+                    st.success("Osmolaridad normal.")
+
+            except Exception:
+                st.error("Ups, inténtalo de nuevo.")
+
+
+
+
+
+# ================== SECCION DE NEFROLOGIA ===========================
+#=====================================================================
+#=====================================================================
 
 elif menu == "nefro":
     
@@ -283,7 +572,7 @@ elif menu == "nefro":
 
     with col6:
         st.header("Modulo de nefrología")
-        st.info("Selecciona el cálculo que necesitas")
+        st.info("Selecciona la herramienta clínica que necesitas en la caja de abajo.")
 
     st.selectbox("Selecciona el cálculo",("KDIGO")
                  , key="nefromodulo")
@@ -425,519 +714,576 @@ elif menu == "nefro":
               st.error("Ingreso de datos erróneo. Inténtalo de nuevo.")
 
 
+
+
+
+
 #stwarning, sterror colorean las cosas. stinfo colorea el texto en azul  
 
-# ================== CALCULAR FPP  ==================
-
-elif menu == "FPP":
-
-    st.header("📅 Fecha Probable de Parto (FPP)")
-
-    fum = st.date_input(
-        "Fecha de Última Menstruación (FUM)",
-        format="DD/MM/YYYY"
-    )
-
-    hoy = datetime.date.today()
-
-    if st.button("Calcular FPP"):
-
-        try:
-            # FPP por FUM (regla de Naegele)
-            fpp = fum + relativedelta(months=9) + datetime.timedelta(days=7)
-
-            if fum.day >= 24:
-                fpp = fpp - relativedelta(months=1)
-
-            semanas = (hoy - fum).days // 7
-
-            st.write(f"**FUM:** {fum.strftime('%d/%m/%Y')}")
-            st.write(f"**Edad gestacional:** {semanas} semanas")
-
-            # Clasificación del embarazo
-            if semanas < 37:
-                st.info("Embarazo pretérmino")
-            elif 37 <= semanas <= 38:
-                st.success("Embarazo a término temprano")
-            elif 39 <= semanas <= 40:
-                st.success("Embarazo a término completo")
-            elif 40 < semanas <= 41:
-                st.warning("Embarazo a término tardío")
-            elif semanas >= 42:
-                st.error("Embarazo post-término")
-
-            # -------------------------------
-            # Corrección por ecografía
-            # -------------------------------
-            usar_eco = st.checkbox("Tengo ecografía del primer trimestre")
-
-            if usar_eco:
-                fecha_eco = st.date_input(
-                    "Fecha de la ecografía",
-                    format="DD/MM/YYYY",
-                    key="eco"
-                )
-
-                eg_eco = st.number_input(
-                    "Edad gestacional por ecografía (semanas)",
-                    min_value=4,
-                    max_value=20,
-                    step=1
-                )
-
-                eg_fum = (fecha_eco - fum).days // 7
-                diferencia_dias = abs((eg_eco - eg_fum) * 7)
-
-                corregir = False
-
-                if eg_eco <= 8 and diferencia_dias >= 5:
-                    corregir = True
-                elif 9 <= eg_eco <= 13 and diferencia_dias >= 7:
-                    corregir = True
-                elif 14 <= eg_eco <= 20 and diferencia_dias >= 10:
-                    corregir = True
-
-                if corregir:
-                    fpp = fecha_eco + datetime.timedelta(weeks=(40 - eg_eco))
-                    st.success("📌 FPP corregida según ecografía")
-                else:
-                    st.info("📌 Se mantiene FPP calculada por FUM")
-
-            st.write(f"### 📆 FPP final: {fpp.strftime('%d/%m/%Y')}")
-
-        except Exception:
-            st.error("Error en los datos. Verifica la información ingresada.")
+# ================== GINECOBSTETRICIA  ===================================
+#=====================================================================
+#=====================================================================
 
 
-# ================== CALCULAR HTA  ==================
+elif menu == "gineco":
 
-elif menu == "HTA":
+    col1, col2 = st.columns([1,3])
 
-    st.header("Hipertensión Arterial")
-    st.info("Agrega una presión y luego calcula si hay HTA.")
-    st.info("Agregar más presiones calculará su promedio")
+    with col1:
+        st.image("images/gineco.png",width=360)
 
-    # Inicializar lista de presiones
-    if "presiones" not in st.session_state:
-        st.session_state.presiones = []
+    with col2:
+        st.header("Modulo de ginecobstetricia")
+        st.info("Selecciona la herramienta clínica que necesitas en la caja de abajo.")
 
-    # ---------- Inputs ----------
-    pas = st.number_input(
-        "Presión Sistólica (mmHg)",
-        min_value=10,
-        max_value=300,
-        value = 120,
-        step=1
-    )
+    st.selectbox("Selecciona el cálculo",("FPP")
+                 , key="ginecomodulo")
+    
 
-    pad = st.number_input(
-        "Presión Diastólica (mmHg)",
-        min_value=30,
-        max_value=200,
-        value = 80,
-        step=1
-    )
-
-    # ---------- Agregar presión ----------
-    if st.button("Agregar presión"):
-        if pad >= pas:
-            st.error("Ingreso de datos inadecuado. Recuerda PAS / PAD.")
-        else:
-            st.session_state.presiones.append((pas, pad))
-            st.success(f"Presión agregada: {pas}/{pad} mmHg")
-
-    # ---------- Mostrar presiones ----------
-    if st.session_state.presiones:
-        st.write("Presiones registradas:")
-        for i, p in enumerate(st.session_state.presiones, 1):
-            st.write(f"{i}. {p[0]}/{p[1]} mmHg")
-
-    # ---------- Calcular ----------
-    if st.button("Calcular HTA") and st.session_state.presiones:
-
-        # Promedios
-        pas_prom = sum(p[0] for p in st.session_state.presiones) / len(st.session_state.presiones)
-        pad_prom = sum(p[1] for p in st.session_state.presiones) / len(st.session_state.presiones)
-
-        st.write(f"**PA promedio:** {round(pas_prom)}/{round(pad_prom)} mmHg")
-
-        grado = []
-
-        # ---------- Clasificación (TU lógica) ----------
-        if pas_prom <= 90 and pad_prom <= 60:
-            grado.append(-1)
-
-        if pas_prom < 120 and pad_prom < 80:
-            grado.append(0)
-
-        if 120 <= pas_prom < 130 and 80 <= pad_prom < 85:
-            grado.append(1)
-
-        if 130 <= pas_prom <= 139 or 85 <= pad_prom <= 89:
-            grado.append(2)
-
-        if 140 <= pas_prom <= 159 or 90 <= pad_prom <= 99:
-            grado.append(3)
-
-        if 160 <= pas_prom <= 179 or 100 <= pad_prom <= 109:
-            grado.append(4)
-
-        if pas_prom >= 180 or pad_prom >= 110:
-            grado.append(5)
-
-        # ---------- Resultado ----------
-        g = max(grado)
-
-        if g < 0:
-            st.info("Hipotensión arterial.")
-        elif g == 0:
-            st.success("Presión arterial óptima.")
-        elif g == 1:
-            st.success("Presión arterial normal.")
-        elif g == 2:
-            st.warning("Presión normal alta / Prehipertensión.")
-        elif g == 3:
-            st.error("Hipertensión Grado 1.")
-        elif g == 4:
-            st.error("Hipertensión Grado 2.")
-        elif g == 5:
-            st.error("Hipertensión Grado 3.")
-
-        # ---------- PAM ----------
-        pam = (pas_prom + 2 * pad_prom) / 3
-        st.write(f"**Presión Arterial Media:** {round(pam)} mmHg")
-
-        if pam < 60:
-            st.error("Riesgo de isquemia e infarto.")
-        elif pam > 100:
-            st.warning("Presión arterial media elevada.")
-        else:
-            st.success("Presión arterial media normal.")
-
-        # ---------- Presión de pulso ----------
-        pp = pas_prom - pad_prom
-        st.write(f"**Presión de pulso:** {round(pp)} mmHg")
-
-        if pp > 60:
-            st.warning("Riesgo cardiovascular aumentado.")
-        elif pp <= 0:
-            st.error("Datos inadecuados para presión de pulso.")
-
-    # ---------- Limpiar ----------
-    if st.button("Reiniciar"):
-        st.session_state.presiones = []
+    #AQUI SE CALCULAN LOS GASES ARTERIALES
+    if st.session_state.ginecomodulo == "FPP":
 
 
-# ================== IPA ==================
+        st.header("📅 Fecha Probable de Parto (FPP)")
 
-elif menu == "Indice paquete-año":
+        fum = st.date_input(
+            "Fecha de Última Menstruación (FUM)",
+            format="DD/MM/YYYY"
+        )
 
-    st.header("Índice Paquetes-Año (IPA)")
+        hoy = datetime.date.today()
 
-    # ---------- INPUTS ----------
-    ncigarros = st.number_input(
-        "Número de cigarrillos al día",
-        min_value=0,
-        max_value=200,
-        step=1
-    )
+        if st.button("Calcular FPP"):
 
-    añosfuma = st.text_input(
-        "Años fumando (o rango de edades, ej: 18-35)"
-    )
+            try:
+                # FPP por FUM (regla de Naegele)
+                fpp = fum + relativedelta(months=9) + datetime.timedelta(days=7)
 
-    # ---------- FUNCIÓN RESTA ----------
-    def resta(dato):
-        x = dato.split("-")
-        a = int(x[1]) - int(x[0])
-        return a
+                if fum.day >= 24:
+                    fpp = fpp - relativedelta(months=1)
 
-    # ---------- BOTÓN ----------
-    if st.button("Calcular IPA"):
+                semanas = (hoy - fum).days // 7
 
-        try:
-            # ---------- Años fumando ----------
-            if "-" in añosfuma:
-                años = resta(añosfuma)
+                st.write(f"**FUM:** {fum.strftime('%d/%m/%Y')}")
+                st.write(f"**Edad gestacional:** {semanas} semanas")
+
+                # Clasificación del embarazo
+                if semanas < 37:
+                    st.info("Embarazo pretérmino")
+                elif 37 <= semanas <= 38:
+                    st.success("Embarazo a término temprano")
+                elif 39 <= semanas <= 40:
+                    st.success("Embarazo a término completo")
+                elif 40 < semanas <= 41:
+                    st.warning("Embarazo a término tardío")
+                elif semanas >= 42:
+                    st.error("Embarazo post-término")
+
+                # -------------------------------
+                # Corrección por ecografía
+                # -------------------------------
+                usar_eco = st.checkbox("Tengo ecografía del primer trimestre")
+
+                if usar_eco:
+                    fecha_eco = st.date_input(
+                        "Fecha de la ecografía",
+                        format="DD/MM/YYYY",
+                        key="eco"
+                    )
+
+                    eg_eco = st.number_input(
+                        "Edad gestacional por ecografía (semanas)",
+                        min_value=4,
+                        max_value=20,
+                        step=1
+                    )
+
+                    eg_fum = (fecha_eco - fum).days // 7
+                    diferencia_dias = abs((eg_eco - eg_fum) * 7)
+
+                    corregir = False
+
+                    if eg_eco <= 8 and diferencia_dias >= 5:
+                        corregir = True
+                    elif 9 <= eg_eco <= 13 and diferencia_dias >= 7:
+                        corregir = True
+                    elif 14 <= eg_eco <= 20 and diferencia_dias >= 10:
+                        corregir = True
+
+                    if corregir:
+                        fpp = fecha_eco + datetime.timedelta(weeks=(40 - eg_eco))
+                        st.success("📌 FPP corregida según ecografía")
+                    else:
+                        st.info("📌 Se mantiene FPP calculada por FUM")
+
+                st.write(f"### 📆 FPP final: {fpp.strftime('%d/%m/%Y')}")
+
+            except Exception:
+                st.error("Error en los datos. Verifica la información ingresada.")
+
+
+
+
+
+# ================ SISTEMA CARDIOVASCULAR ============================
+#=====================================================================
+#=====================================================================
+
+
+elif menu == "cardio":
+
+    col1, col2 = st.columns([1,3])
+
+    with col1:
+        st.image("images/heart.png",width=400)
+
+    with col2:
+        st.header("Modulo de Cardiología")
+        st.info("Aquí puedes encontrar tanto cálculos como escalas clínicas referentes al sistema cardiovascular.")
+
+    st.selectbox("Selecciona el cálculo",("HTA","wifi","CHAD VASc","Escala Wells (TEP)","Escala Wells (TVP)")
+                 , key="cardiomodulo")
+    
+    #AQUI SE CALCULA LA HTA CON LA TFG
+    if st.session_state.cardiomodulo == "HTA":
+
+        st.header("Hipertensión Arterial")
+        st.info("Agrega una presión y luego calcula si hay HTA.")
+        st.info("Agregar más presiones calculará su promedio")
+
+        # Inicializar lista de presiones
+        if "presiones" not in st.session_state:
+            st.session_state.presiones = []
+
+        # ---------- Inputs ----------
+        pas = st.number_input(
+            "Presión Sistólica (mmHg)",
+            min_value=10,
+            max_value=300,
+            value = 120,
+            step=1
+        )
+
+        pad = st.number_input(
+            "Presión Diastólica (mmHg)",
+            min_value=30,
+            max_value=200,
+            value = 80,
+            step=1
+        )
+
+        # ---------- Agregar presión ----------
+        if st.button("Agregar presión"):
+            if pad >= pas:
+                st.error("Ingreso de datos inadecuado. Recuerda PAS / PAD.")
             else:
-                años = float(añosfuma.replace(",", ".").replace(" ", ""))
+                st.session_state.presiones.append((pas, pad))
+                st.success(f"Presión agregada: {pas}/{pad} mmHg")
 
-            # ---------- Cálculo IPA ----------
-            ipa = (ncigarros * años) / 20
+        # ---------- Mostrar presiones ----------
+        if st.session_state.presiones:
+            st.write("Presiones registradas:")
+            for i, p in enumerate(st.session_state.presiones, 1):
+                st.write(f"{i}. {p[0]}/{p[1]} mmHg")
 
-            st.success(f"IPA: {round(ipa,2)} paquetes/año")
+        # ---------- Calcular ----------
+        if st.button("Calcular HTA") and st.session_state.presiones:
 
-            # ---------- Clasificación ----------
-            if ipa < 5:
-                st.info("Grado de tabaquismo: Leve.")
-            elif 5 <= ipa <= 15:
-                st.warning("Grado de tabaquismo: Moderado.")
-            elif 16 <= ipa <= 25:
-                st.error("Grado de tabaquismo: Grave.")
-            elif ipa > 25:
-                st.error("Grado de tabaquismo: Muy grave.")
+            # Promedios
+            pas_prom = sum(p[0] for p in st.session_state.presiones) / len(st.session_state.presiones)
+            pad_prom = sum(p[1] for p in st.session_state.presiones) / len(st.session_state.presiones)
 
-        except Exception:
-            st.error("Ups, error al ingresar los datos. Inténtalo de nuevo.")
+            st.write(f"**PA promedio:** {round(pas_prom)}/{round(pad_prom)} mmHg")
 
-# ================== CLASIFICACION DE ANEMIA ==================
-elif menu == "Clasificación morfológica de la anemia":
+            grado = []
 
-    st.header("Clasificación morfológica de la anemia")
+            # ---------- Clasificación (TU lógica) ----------
+            if pas_prom <= 90 and pad_prom <= 60:
+                grado.append(-1)
 
-    # ---------- INPUTS ----------
-    recuento = st.number_input(
-        "Recuento eritrocitario (millones/µL)",
-        min_value=0.1, value= 5.0,
-        step=0.1
-    )
+            if pas_prom < 120 and pad_prom < 80:
+                grado.append(0)
 
-    hto = st.number_input(
-        "Hematocrito (%)",
-        min_value=0.0, value= 45.0,
-        step=1.0
-    )
+            if 120 <= pas_prom < 130 and 80 <= pad_prom < 85:
+                grado.append(1)
 
-    hb = st.number_input(
-        "Hemoglobina (g/dL)",
-        min_value=0.0, value= 14.0,
-        step=0.1
-    )
+            if 130 <= pas_prom <= 139 or 85 <= pad_prom <= 89:
+                grado.append(2)
 
-    # ---------- BOTÓN ----------
-    if st.button("Clasificar anemia"):
+            if 140 <= pas_prom <= 159 or 90 <= pad_prom <= 99:
+                grado.append(3)
 
-        try:
-            # ---------- VCM ----------
-            hto_frac = hto / 100
-            vcm = (hto_frac / recuento) * 1000
+            if 160 <= pas_prom <= 179 or 100 <= pad_prom <= 109:
+                grado.append(4)
 
-            if 80 <= vcm <= 100:
-                st.success(
-                    f"VCM: {round(vcm,2)} fL. Eritrocito normocítico."
-                )
+            if pas_prom >= 180 or pad_prom >= 110:
+                grado.append(5)
 
-            elif vcm < 80:
-                st.warning(
-                    f"VCM: {round(vcm,2)} fL. Eritrocito microcítico."
-                )
+            # ---------- Resultado ----------
+            g = max(grado)
 
-            elif vcm > 100:
-                st.warning(
-                    f"VCM: {round(vcm,2)} fL. Eritrocito macrocítico."
-                )
+            if g < 0:
+                st.info("Hipotensión arterial.")
+            elif g == 0:
+                st.success("Presión arterial óptima.")
+            elif g == 1:
+                st.success("Presión arterial normal.")
+            elif g == 2:
+                st.warning("Presión normal alta / Prehipertensión.")
+            elif g == 3:
+                st.error("Hipertensión Grado 1.")
+            elif g == 4:
+                st.error("Hipertensión Grado 2.")
+            elif g == 5:
+                st.error("Hipertensión Grado 3.")
 
-        except Exception:
-            st.error("Ups, me faltan datos para calcular el VCM 😕")
+            # ---------- PAM ----------
+            pam = (pas_prom + 2 * pad_prom) / 3
+            st.write(f"**Presión Arterial Media:** {round(pam)} mmHg")
 
-        try:
-            # ---------- HCM ----------
-            hcm = (hb / recuento) * 10
+            if pam < 60:
+                st.error("Riesgo de isquemia e infarto.")
+            elif pam > 100:
+                st.warning("Presión arterial media elevada.")
+            else:
+                st.success("Presión arterial media normal.")
 
-            if 27 <= hcm <= 34:
-                st.success(
-                    f"HCM: {round(hcm,2)} pg/célula. Eritrocito normocrómico."
-                )
+            # ---------- Presión de pulso ----------
+            pp = pas_prom - pad_prom
+            st.write(f"**Presión de pulso:** {round(pp)} mmHg")
 
-            elif hcm < 27:
-                st.warning(
-                    f"HCM: {round(hcm,2)} pg/célula. Eritrocito hipocrómico."
-                )
+            if pp > 60:
+                st.warning("Riesgo cardiovascular aumentado.")
+            elif pp <= 0:
+                st.error("Datos inadecuados para presión de pulso.")
 
-            elif hcm > 34:
-                st.warning(
-                    f"HCM: {round(hcm,2)} pg/célula. Eritrocito hipercrómico."
-                )
+        # ---------- Limpiar ----------
+        if st.button("Reiniciar"):
+            st.session_state.presiones = []
 
-        except Exception:
-            st.error("Ups, me faltan datos para calcular el HCM 😕")
+    
+    #AQUI CALCULAMOS LA ESCALA WIFI
+
+    elif st.session_state.cardiomodulo == "wifi":
+
+        st.header("🦶 Escala WIfI (Wound – Ischemia – Foot Infection)")
+        st.write("Evalúa el riesgo de amputación a 1 año y orienta la necesidad de revascularización según consenso Delphi.")
+
+        # ===============================
+        # 🩹 WOUND (HERIDA)
+        # ===============================
+        st.subheader("🩹 Wound (Herida)")
+
+        wound_options = [
+            "No úlcera",
+            "Úlcera/s pequeña/s, superficial/es en pie o pierna distal; no exposición del hueso, salvo falange distal",
+            "Úlcera profunda con exposición de hueso, articulación o tendón; sin afectación del talón o superficial en talón sin calcáneo",
+            "Úlcera extensa y profunda en antepié o mediopié; o úlcera profunda de todo el espesor del talón ± afectación del calcáneo"
+        ]
+
+        wound = st.radio("Seleccione la descripción que mejor corresponde:", wound_options)
+
+        wound_map = {
+            wound_options[0]: 0,
+            wound_options[1]: 1,
+            wound_options[2]: 2,
+            wound_options[3]: 3,
+        }
+
+        # ===============================
+        # 🩸 ISQUEMIA
+        # ===============================
+        st.subheader("🩸 Isquemia")
+
+        ischemia_options = [
+            "≥ 0,8",
+            "0,6 – 0,79",
+            "0,4 – 0,59",
+            "≤ 0,39"
+        ]
+
+        isquemia = st.radio("Índice tobillo-brazo (ITB):", ischemia_options)
+
+        isquemia_map = {
+            ischemia_options[0]: 0,
+            ischemia_options[1]: 1,
+            ischemia_options[2]: 2,
+            ischemia_options[3]: 3,
+        }
+
+        # ===============================
+        # 🦠 FOOT INFECTION
+        # ===============================
+        st.subheader("🦠 Foot Infection (Infección)")
+
+        infection_options = [
+            "Sin signos ni síntomas de infección",
+            "Infección local limitada a piel y tejido celular subcutáneo, sin SRIS",
+            "Infección local con eritema >2 cm o afectación de estructuras profundas (absceso, osteomielitis, fascitis), sin SRIS",
+            "Infección con signos de SRIS (≥2 criterios sistémicos)"
+        ]
+
+        infeccion = st.radio("Grado de infección:", infection_options)
+
+        infeccion_map = {
+            infection_options[0]: 0,
+            infection_options[1]: 1,
+            infection_options[2]: 2,
+            infection_options[3]: 3,
+        }
+
+        # ===============================
+        # 🔢 CONVERSIÓN A GRADOS
+        # ===============================
+        wound_grade = wound_map[wound]
+        ischemia_grade = isquemia_map[isquemia]
+        infection_grade = infeccion_map[infeccion]
+
+        # ===============================
+        # 📊 MATRIZ DELPHI WiFi
+        # ===============================
+        wifi_matrix = {
+            0: [
+                ["VL", "VL", "L",  "M"],
+                ["VL", "VL", "L",  "M"],
+                ["L",  "L",  "M",  "H"],
+                ["M",  "M",  "H",  "H"],
+            ],
+            1: [
+                ["VL", "L",  "M",  "H"],
+                ["VL", "L",  "M",  "H"],
+                ["M",  "M",  "H",  "H"],
+                ["H",  "H",  "H",  "H"],
+            ],
+            2: [
+                ["L",  "L",  "M",  "H"],
+                ["L",  "M",  "H",  "H"],
+                ["M",  "H",  "H",  "H"],
+                ["H",  "H",  "H",  "H"],
+            ],
+            3: [
+                ["L",  "M",  "M",  "H"],
+                ["M",  "M",  "H",  "H"],
+                ["H",  "H",  "H",  "H"],
+                ["H",  "H",  "H",  "H"],
+            ],
+        }
+
+
+        #MATRIZ DE REVASCUARIZACIÓN
+
+        revasc_matrix = {
+                0: [  # Isquemia 0
+                    ["VL", "VL", "VL", "VL"],
+                    ["VL", "VL", "VL", "VL"],
+                    ["VL", "VL", "VL", "VL"],
+                    ["VL", "VL", "VL", "VL"],
+                ],
+                1: [  # Isquemia 1
+                    ["VL", "L",  "L",  "M"],
+                    ["VL", "M",  "M",  "M"],
+                    ["VL", "M",  "H",  "H"],
+                    ["VL", "M",  "M",  "H"],
+                ],
+                2: [  # Isquemia 2
+                    ["L",  "L",  "M",  "M"],
+                    ["M",  "H",  "H",  "H"],
+                    ["H",  "H",  "H",  "H"],
+                    ["H",  "H",  "H",  "H"],
+                ],
+                3: [  # Isquemia 3
+                    ["M",  "H",  "H",  "H"],
+                    ["H",  "H",  "H",  "H"],
+                    ["H",  "H",  "H",  "H"],
+                    ["H",  "H",  "H",  "H"],
+                ],
+}
+
+
+        riesgo = wifi_matrix[ischemia_grade][wound_grade][infection_grade]
+        beneficio_revasc = revasc_matrix[ischemia_grade][wound_grade][infection_grade]
+
+
+        # ===============================
+        # 🎨 VISUALIZACIÓN CLÍNICA
+        # ===============================
+        st.divider()
+        st.subheader("📊 Interpretación clínica WIfI")
+
+        color_map = {
+            "VL": "green",
+            "L": "goldenrod",
+            "M": "orange",
+            "H": "red",
+        }
+
+        nivel_texto = {
+            "VL": "Muy bajo",
+            "L": "Bajo",
+            "M": "Moderado",
+            "H": "Alto",
+        }
+
+
+        conducta_amputacion = {
+            "VL": "Manejo conservador y seguimiento ambulatorio.",
+            "L": "Optimizar manejo médico y control estrecho.",
+            "M": "Valoración por cirugía vascular. Riesgo intermedio de amputación.",
+            "H": "Intervención urgente. Alto riesgo de amputación a 1 año.",
+        }
+
+
+        conducta_revasc = {
+            "VL": "No se recomienda revascularización. Manejo conservador.",
+            "L": "Revascularización generalmente no indicada.",
+            "M": "Valorar revascularización según contexto clínico y anatomía vascular.",
+            "H": "Alta probabilidad de beneficio. Revascularización indicada si es técnicamente posible.",
+        }
+
+
+        # ---- Riesgo de amputación ----
+        st.markdown(
+            f"""
+            <h3 style="color:{color_map[riesgo]}">
+            Riesgo de amputación a 1 año: {nivel_texto[riesgo]} ({riesgo})
+            </h3>
+            """,
+            unsafe_allow_html=True
+        )
+
+        st.info(conducta_amputacion[riesgo])
+
+        # ---- Revascularización ----
+        st.markdown(
+            f"""
+            <h3 style="color:{color_map[beneficio_revasc]}">
+            Probabilidad de beneficio con revascularización: {nivel_texto[beneficio_revasc]} ({beneficio_revasc})
+            </h3>
+            """,
+            unsafe_allow_html=True
+        )
+
+        st.warning(conducta_revasc[beneficio_revasc])
+
+
+        st.caption("Referencias: DOI: 10.1016/j.angio.2016.08.002")
 
 
 
 
-# ================== LDL ==================
+# ====================== HEMATOLOGÍA ================================
+#=====================================================================
+#=====================================================================
 
-elif menu == "Perfil lipídico":
+elif menu == "hemato":
 
-    st.header("Perfil lipídico (LDL, HDL, Triglicéridos)")
-    st.info("Usamos la ecuación de Friedewald utilizada para estimar LDL")
+    col1, col2 = st.columns([1,3])
 
-    sexo = st.radio("Sexo biológico", ["Hombre", "Mujer"])
+    with col1:
+        st.image("images/hemato.png",width=360)
 
-    colesteroltotal = st.number_input(
-        "Colesterol total (mg/dL)",
-        min_value=0.0,
-        step=1.0
-    )
+    with col2:
+        st.header("Modulo de hematología")
+        st.info("Selecciona la herramienta clínica que necesitas en la caja de abajo.")
 
-    hdl = st.number_input(
-        "Colesterol HDL (mg/dL)",
-        min_value=0.0,
-        step=1.0
-    )
+    st.selectbox("Selecciona el cálculo",("Clasificación morfológica de la anemia")
+                 , key="hematomodulo")
+    
 
-    trigliceridos = st.number_input(
-        "Triglicéridos (mg/dL)",
-        min_value=0.0,
-        step=1.0
-    )
+    #AQUI SE CALCULAN LOS VALORES DEL VCM Y HCM
+    if st.session_state.hematomodulo == "Clasificación morfológica de la anemia":
 
-    if st.button("Calcular perfil lipídico"):
+        st.header("Clasificación morfológica de la anemia")
 
-        try:
-            # ---------- Cálculo LDL (Friedewald) ----------
-            ldl = colesteroltotal - hdl - (trigliceridos / 5)
+        # ---------- INPUTS ----------
+        recuento = st.number_input(
+            "Recuento eritrocitario (millones/µL)",
+            min_value=0.1, value= 5.0,
+            step=0.1
+        )
 
-            st.success(f"LDL: {round(ldl,2)} mg/dL")
+        hto = st.number_input(
+            "Hematocrito (%)",
+            min_value=0.0, value= 45.0,
+            step=1.0
+        )
 
-            # ---------- Interpretación LDL ----------
-            if ldl >= 190:
-                st.error(
-                    "Implica riesgo mayor y manejo farmacológico. "
-                    "No necesitas usar tablas para calcular el riesgo."
-                )
-            elif 160 <= ldl <= 189:
-                st.warning(
-                    "Colesterol LDL alto. Se sugiere manejo con estatinas "
-                    "de moderada intensidad."
-                )
-            elif 130 <= ldl <= 159:
-                st.warning("Colesterol LDL por encima del rango normal.")
-            elif 100 <= ldl <= 129:
-                st.info("Colesterol LDL casi óptimo. Entre más bajo mejor :)")
-            elif ldl < 100:
-                st.success("Colesterol LDL óptimo (lo mejor para la salud).")
+        hb = st.number_input(
+            "Hemoglobina (g/dL)",
+            min_value=0.0, value= 14.0,
+            step=0.1
+        )
 
-            # ---------- HDL (dependiente de sexo) ----------
-            if sexo == "Hombre":
-                if hdl >= 60:
+        # ---------- BOTÓN ----------
+        if st.button("Clasificar anemia"):
+
+            try:
+                # ---------- VCM ----------
+                hto_frac = hto / 100
+                vcm = (hto_frac / recuento) * 1000
+
+                if 80 <= vcm <= 100:
                     st.success(
-                        f"{round(hdl,2)} mg/dL. HDL protector contra enfermedad cardiovascular."
-                    )
-                elif 40 <= hdl <= 59:
-                    st.info(
-                        f"{round(hdl,2)} mg/dL. HDL en rango límite inferior."
-                    )
-                elif hdl < 40:
-                    st.error(
-                        f"{round(hdl,2)} mg/dL. Factor de riesgo cardiovascular."
+                        f"VCM: {round(vcm,2)} fL. Eritrocito normocítico."
                     )
 
-            if sexo == "Mujer":
-                if hdl >= 60:
+                elif vcm < 80:
+                    st.warning(
+                        f"VCM: {round(vcm,2)} fL. Eritrocito microcítico."
+                    )
+
+                elif vcm > 100:
+                    st.warning(
+                        f"VCM: {round(vcm,2)} fL. Eritrocito macrocítico."
+                    )
+
+            except Exception:
+                st.error("Ups, me faltan datos para calcular el VCM 😕")
+
+            try:
+                # ---------- HCM ----------
+                hcm = (hb / recuento) * 10
+
+                if 27 <= hcm <= 34:
                     st.success(
-                        f"{round(hdl,2)} mg/dL. HDL protector contra enfermedad cardiovascular."
-                    )
-                elif 50 <= hdl <= 59:
-                    st.info(
-                        f"{round(hdl,2)} mg/dL. HDL en rango límite inferior."
-                    )
-                elif hdl < 50:
-                    st.error(
-                        f"{round(hdl,2)} mg/dL. Factor de riesgo cardiovascular."
+                        f"HCM: {round(hcm,2)} pg/célula. Eritrocito normocrómico."
                     )
 
-            # ---------- Colesterol total ----------
-            if colesteroltotal < 200:
-                st.success(
-                    f"{round(colesteroltotal,2)} mg/dL. Colesterol total deseable."
-                )
-            elif 200 <= colesteroltotal <= 239:
-                st.warning(
-                    f"{round(colesteroltotal,2)} mg/dL. Colesterol total por encima del rango normal."
-                )
-            elif colesteroltotal >= 240:
-                st.error(
-                    f"{round(colesteroltotal,2)} mg/dL. Colesterol total alto."
-                )
+                elif hcm < 27:
+                    st.warning(
+                        f"HCM: {round(hcm,2)} pg/célula. Eritrocito hipocrómico."
+                    )
 
-            # ---------- Validaciones Friedewald ----------
-            if trigliceridos >= 400 or trigliceridos <= 50:
-                st.warning(
-                    "La fórmula de Friedewald no es tan precisa para este "
-                    "valor de triglicéridos (> 400 o < 50)."
-                )
+                elif hcm > 34:
+                    st.warning(
+                        f"HCM: {round(hcm,2)} pg/célula. Eritrocito hipercrómico."
+                    )
 
-            if ldl < 0:
-                st.error("Ups, ingresa los datos nuevamente.")
-
-        except Exception:
-            st.error("Ups, inténtalo de nuevo.")
+            except Exception:
+                st.error("Ups, me faltan datos para calcular el HCM 😕")
 
 
 
 
-# ================== Corrección de sodio ==================
-
-elif menu == "Sodio corregido":
-
-    st.header("Sodio corregido y osmolaridad efectiva")
-
-    sodioserico = st.number_input(
-        "Sodio sérico (mEq/L)",
-        min_value=0.0,
-        value= 140.0,
-        step=1.0
-    )
-
-    glucosa = st.number_input(
-        "Glucosa sérica (mg/dL)",
-        min_value=0.0,
-        value=90.0,
-        step=1.0
-    )
-
-    if st.button("Calcular sodio corregido"):
-
-        try:
-            # ---------- SODIO CORREGIDO ----------
-            if glucosa >= 400:
-                sodiocorregido = round(
-                    sodioserico + 2.4 * ((glucosa / 100) - 1),
-                    2
-                )
-
-            elif 400 > glucosa >= 100:
-                sodiocorregido = round(
-                    sodioserico + 1.6 * ((glucosa / 100) - 1),
-                    2
-                )
-
-            else:
-                sodiocorregido = sodioserico
-
-            st.success(f"Na corregido: {sodiocorregido} mEq/L")
-
-            # ---------- OSMOLARIDAD EFECTIVA ----------
-            osm_efectiva = (2 * sodiocorregido) + (glucosa / 18)
-
-            st.info(
-                f"Osmolaridad efectiva: {round(osm_efectiva,2)} mOsm/L"
-            )
-
-            # ---------- INTERPRETACIÓN ----------
-            if osm_efectiva > 290:
-                st.warning("Estado hiperosmolar.")
-
-            elif osm_efectiva < 275:
-                st.warning("Estado hipoosmolar o hipotónico.")
-
-            else:
-                st.success("Osmolaridad normal.")
-
-        except Exception:
-            st.error("Ups, inténtalo de nuevo.")
+# ================== PEDIATRIA ==================
+#=====================================================================
+#=====================================================================
 
 
-# ================== Liquidos, Na y K en pediatría ==================
+elif menu == "pediatria":
 
-elif menu == "liquidospediatria":
 
-    st.header("Líquidos en pediatría")
-    st.info("Selecciona el trastorno hidroelectrolitico que deseas corregir")
+    col1, col2 = st.columns([1,3])
 
-    st.selectbox("Selecciona el cálculo",("Liquidos mantenimiento","Disnatremias","DisKalemias")
-                 , key="submodulo")
+    with col1:
+        st.image("images/pediatra.png",width=360)
+
+    with col2:
+        st.header("Cálculos en pediatría")
+        st.info("Selecciona la herramienta clínica que necesitas en la caja de abajo.")
+
+        st.selectbox("Selecciona el cálculo",("Liquidos mantenimiento","Disnatremias","DisKalemias")
+                    , key="submodulo")
     
 
     if st.session_state.submodulo == "Liquidos mantenimiento":

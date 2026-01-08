@@ -122,7 +122,7 @@ elif menu == "respiratorio":
         st.header("Modulo de sistema respiratorio")
         st.info("Selecciona la herramienta clínica que necesitas en la caja de abajo.")
 
-    st.selectbox("Selecciona el cálculo",("Gases arteriales","Indice paquete-año")
+    st.selectbox("Selecciona el cálculo",("Gases arteriales","Indice paquete-año","TEP")
                  , key="respimodulo")
     
 
@@ -305,6 +305,123 @@ elif menu == "respiratorio":
 
             except Exception:
                 st.error("Ups, error al ingresar los datos. Inténtalo de nuevo.")
+
+    #AQUI SE CALCULA EL SCORE DE WELLS
+
+    if st.session_state.respimodulo == "TEP":
+
+        st.header("Enfoque del paciente con sospecha de tromboembolismo pulmonar")
+        st.write("Aqui te ayudo a enfocar el riesgo y la severidad del tromboembolismo pulmonar")     
+
+        st.subheader("Score de Wells para el Tromboembolismo pulmonar")
+
+        wells_items = {"Signos y sintomas clínicos de TVP": 3,
+                       "Otros diagnosticos menos probables que TEP":3,
+                       "Frecuencia cardíaca > 100 lpm": 1.5,
+                       "Inmovilicación o cirugía en las últimas 4 semanas":1.5,
+                       "Trombosis venosa profunda o Tromboembola pulmonar previa": 1.5,
+                       "Hemoptisis":1,
+                       "Cáncer":1
+                       }
+
+        seleccion = st.multiselect("Selecciona los criterios presentes:", list(wells_items.keys()))
+
+        puntaje= sum(wells_items[item] for item in seleccion)
+
+        st.markdown(f"Puntaje total de wells **{puntaje}**")
+
+        if puntaje < 2:
+            st.success("Baja probabilidad")
+            st.info("Considerar Dimero D")
+
+            st.subheader("Índice PERC")
+            st.write("Criterios de exclusion de embolia pulmonar.")
+            st.write("Diseñado para los pacientes que su probabilidad de embolia pulmonar es tan baja que ni siquiera debería iniciarse un estudio diagnóstico")
+            st.info("Especialmente útil cuando la prevalencia de embolia en tu hospital es baja (< 15%)")
+            
+            perc_items = {"Edad < 50 años":1, "Frecuencia cardiaca < 100 lpm": 1, "Saturación ≥ 95%": 1, "Sin hemoptisis":1, "Sin uso de estrogenos":1,
+                          "Sin uso TVP o EP previa": 1, "Sin hinchazon unilateral de las piernas":1, "Ninguna cirugía/trauma que requiera hospitalización dentro de las cuatro semanas anteriores":1}
+            
+            seleccion_perc = st.multiselect("Selecciona los criterios presentes: ", list(perc_items.keys()))
+
+            puntaje_perc = sum(perc_items[item] for item in seleccion_perc)
+
+            if puntaje_perc >= 8:
+                st.info("Probabilidad de EP muy mínima, no están indicadas más pruebas")
+            else:
+                st.info("Tiene algo de riesgo")
+
+
+
+        elif 2 <= puntaje <= 6:
+            st.warning("Pobabilidad intermedia")
+            st.info("Considerar Dimero D o Angio-TAC")
+
+        elif puntaje > 2:
+            st.error("Riesgo elevado")
+            st.info("Se recomienda Angio-TAC")
+
+
+        #AQUI CALCULAMOS EL PESI
+        st.subheader("PESI")
+        st.write("Aqui sabemos que tu paciente tiene tromboembolismo pulmonar, ¿Pero cuál es su severidad?")
+
+        edad = st.number_input("Ingresa la edad de tu paciente en años", step = 1)
+
+        if edad >= 80:
+
+            pesi_items = {"Cancer": 1,
+                        "Insuficiencia cardíaca crónica":1,
+                        "Frecuencia cardíaca > 110 lpm": 1.5,
+                        "Presión arterial sistólica < 100 mmHg":1.5,
+                        "Saturación arterial de oxígeno <90%": 1.5,
+                        }
+
+            seleccion_pesi = st.multiselect("Selecciona los criterios presentes: ", list(pesi_items.keys()))
+
+            puntaje_pesi = sum(pesi_items[item] for item in seleccion_perc)
+
+
+            if puntaje_pesi == 0:
+                st.success("Riesgo de muerte a 30 días del 1.0%")
+
+            else:
+                st.error("Riesgo de muerte a 30 días del 10.9%")
+        
+        elif edad < 80:
+
+            pesi_items = {"Sexo masculino": 10,
+                        "Cancer":30,
+                        "Insuficiencia cardíaca crónica":10,
+                        "Insuficiencia pulmonar crónica":10,
+                        "Frecuencia cardíaca > 110 lpm": 20,
+                        "Presión arterial sistólica < 100 mmHg":30,
+                        "Frecuencia respiratoria > 30 rpm":20,
+                        "Temperatura < 36°":20,
+                        "Estado mental alterado":60,
+
+                        "Saturación arterial de oxígeno <90%": 20,
+                        }
+
+
+            seleccion_pesi = st.multiselect("Selecciona los criterios presentes: ", list(pesi_items.keys()))
+
+            puntaje_pesi = sum(pesi_items[item] for item in seleccion_pesi)
+
+            if puntaje_pesi <= 65:
+                st.success("Clase I: Riesgo de muerte muy bajo")
+
+            elif 66 <= puntaje_pesi <= 85:
+                st.warning("Clase II: Riesgo de muerte bajo")
+
+            elif 86 <= puntaje_pesi <= 105:
+                st.warning("Clase III: Riesgo de muerte moderado")
+
+            elif 106 <= puntaje_pesi <= 125:
+                st.error("Clase IV: Riesgo de muerte alto")
+
+            else:
+                st.error("Clase V: Riesgo de muerte muy alto")
 
 
 

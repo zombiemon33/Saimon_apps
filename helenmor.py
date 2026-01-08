@@ -334,6 +334,9 @@ elif menu == "respiratorio":
             st.success("Baja probabilidad")
             st.info("Considerar Dimero D")
 
+            st.write("") #HAGAMOS UN ESPACIO ENTRE OPCIONES
+            st.write("")
+
             st.subheader("Índice PERC")
             st.write("Criterios de exclusion de embolia pulmonar.")
             st.write("Diseñado para los pacientes que su probabilidad de embolia pulmonar es tan baja que ni siquiera debería iniciarse un estudio diagnóstico")
@@ -361,6 +364,10 @@ elif menu == "respiratorio":
             st.error("Riesgo elevado")
             st.info("Se recomienda Angio-TAC")
 
+        
+
+        st.write("") #HAGAMOS UN ESPACIO ENTRE OPCIONES
+        st.write("")
 
         #AQUI CALCULAMOS EL PESI
         st.subheader("PESI")

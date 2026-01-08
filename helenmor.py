@@ -379,13 +379,13 @@ elif menu == "respiratorio":
 
             seleccion_pesi = st.multiselect("Selecciona los criterios presentes: ", list(pesi_items.keys()))
 
-            puntaje_pesi = sum(pesi_items[item] for item in seleccion_perc)
+            puntaje_pesi = sum(pesi_items[item] for item in seleccion_pesi)
 
 
             if puntaje_pesi == 0:
                 st.success("Riesgo de muerte a 30 días del 1.0%")
 
-            else:
+            elif puntaje_pesi != 0:
                 st.error("Riesgo de muerte a 30 días del 10.9%")
         
         elif edad < 80:
@@ -422,7 +422,6 @@ elif menu == "respiratorio":
 
             else:
                 st.error("Clase V: Riesgo de muerte muy alto")
-
 
 
 

@@ -94,14 +94,14 @@ if menu == "Inicio":
         st.image("helen_doctora.png",width=180)
 
     with col2:
-     st.header("HELEN M.O.R.")
-     st.write("¿Es un pájaro?¿Es un avión? No, es la heredera de I.V.A.N. MOR !!!")
-     st.write("""
-           HELEN M.O.R. es una plataforma clínica desarrollada con el fin de brindar herramientas
-              para estudio y cálculo de variables que se utilizan frecuentemente en el área de la salud
-              de una manera más sencilla.
-    """)
-     st.info("Selecciona un módulo en el menú lateral")
+        st.header("HELEN M.O.R.")
+        st.write("¿Es un pájaro?¿Es un avión? No, es la heredera de I.V.A.N. MOR !!!")
+        st.write("""
+            HELEN M.O.R. es una plataforma clínica desarrollada con el fin de brindar herramientas
+                para estudio y cálculo de variables que se utilizan frecuentemente en el área de la salud
+                de una manera más sencilla.
+        """)
+    st.info("Selecciona un módulo en el menú lateral")
 
 
 
@@ -122,8 +122,8 @@ elif menu == "respiratorio":
         st.header("Modulo de sistema respiratorio")
         st.info("Selecciona la herramienta clínica que necesitas en la caja de abajo.")
 
-    st.selectbox("Selecciona el cálculo",("Gases arteriales","Indice paquete-año","TEP")
-                 , key="respimodulo")
+        st.selectbox("Selecciona el cálculo",("Gases arteriales","Indice paquete-año","TEP")
+                    , key="respimodulo")
     
 
     #AQUI SE CALCULAN LOS GASES ARTERIALES
@@ -448,8 +448,8 @@ elif menu == "metabolico":
         st.header("Modulo de sistema metabólico-endocrino")
         st.info("Selecciona la herramienta clínica que necesitas en la caja de abajo.")
 
-    st.selectbox("Selecciona el cálculo",("IMC","Perfil lipídico","Sodio corregido")
-                 , key="metamodulo")
+        st.selectbox("Selecciona el cálculo",("IMC","Perfil lipídico","Sodio corregido")
+                    , key="metamodulo")
     
     
     #AQUI SE CALCULA EL IMC
@@ -697,8 +697,8 @@ elif menu == "nefro":
         st.header("Modulo de nefrología")
         st.info("Selecciona la herramienta clínica que necesitas en la caja de abajo.")
 
-    st.selectbox("Selecciona el cálculo",("KDIGO")
-                 , key="nefromodulo")
+        st.selectbox("Selecciona el cálculo",("KDIGO")
+                    , key="nefromodulo")
     
     #AQUI SE CALCULA EL KDIGO CON LA TFG
     if st.session_state.nefromodulo == "KDIGO":
@@ -859,8 +859,8 @@ elif menu == "gineco":
         st.header("Modulo de ginecobstetricia")
         st.info("Selecciona la herramienta clínica que necesitas en la caja de abajo.")
 
-    st.selectbox("Selecciona el cálculo",("FPP")
-                 , key="ginecomodulo")
+        st.selectbox("Selecciona el cálculo",("FPP")
+                    , key="ginecomodulo")
     
 
     #AQUI SE CALCULAN LOS GASES ARTERIALES
@@ -964,8 +964,8 @@ elif menu == "cardio":
         st.header("Modulo de Cardiología")
         st.info("Aquí puedes encontrar tanto cálculos como escalas clínicas referentes al sistema cardiovascular.")
 
-    st.selectbox("Selecciona el cálculo",("HTA","wifi","CHAD VASc","Escala Wells (TEP)","Escala Wells (TVP)")
-                 , key="cardiomodulo")
+        st.selectbox("Selecciona el cálculo",("HTA","wifi","CHAD VASc","Escala Wells (TEP)","Escala Wells (TVP)")
+                    , key="cardiomodulo")
     
     #AQUI SE CALCULA LA HTA CON LA TFG
     if st.session_state.cardiomodulo == "HTA":
@@ -1309,8 +1309,8 @@ elif menu == "hemato":
         st.header("Modulo de hematología")
         st.info("Selecciona la herramienta clínica que necesitas en la caja de abajo.")
 
-    st.selectbox("Selecciona el cálculo",("Clasificación morfológica de la anemia")
-                 , key="hematomodulo")
+        st.selectbox("Selecciona el cálculo",("Clasificación morfológica de la anemia")
+                     , key="hematomodulo")
     
 
     #AQUI SE CALCULAN LOS VALORES DEL VCM Y HCM

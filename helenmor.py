@@ -1405,7 +1405,7 @@ elif menu == "pediatria":
         st.header("Cálculos en pediatría")
         st.info("Selecciona la herramienta clínica que necesitas en la caja de abajo.")
 
-        st.selectbox("Selecciona el cálculo",("Liquidos mantenimiento","Disnatremias","DisKalemias")
+        st.selectbox("Selecciona el cálculo",("Liquidos mantenimiento","Disnatremias","DisKalemias","Edad corregida (prematuros)")
                     , key="submodulo")
     
 
@@ -1594,10 +1594,68 @@ elif menu == "pediatria":
 
                 st.success("Tiene el potasio normal")
 
+    # Calculo de edad corregida en prematuros
+    elif st.session_state.submodulo == "Edad corregida (prematuros)":
 
+        st.header("Edad corregida en recién nacidos prematuros")
+        st.info("Útil para evaluación del crecimiento y neurodesarrollo (hasta 24 meses)")
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            fecha_nacimiento = st.date_input(
+                "Fecha de nacimiento",
+                format="DD/MM/YYYY"
+            )
+
+            semanas_gestacion = st.number_input(
+                "Semanas de gestación al nacer",
+                min_value=22,
+                max_value=36,
+                value=32,
+                step=1
+            )
+
+        with col2:
+            fecha_evaluacion = st.date_input(
+                "Fecha de evaluación",
+                value=datetime.date.today(),
+                format="DD/MM/YYYY"
+            )
+
+        if st.button("Calcular edad corregida"):
+
+            try:
+                # ---------- Edad cronológica ----------
+                edad_cronologica = relativedelta(fecha_evaluacion, fecha_nacimiento)
+
+                semanas_crono = edad_cronologica.years * 52 + edad_cronologica.months * 4 + edad_cronologica.days // 7
+
+                # ---------- Corrección de edad ----------
+                semanas_prematuridad = 40 - semanas_gestacion
+                semanas_corregidas = semanas_crono - semanas_prematuridad
+
+                # Evitar valores negativos
+                if semanas_corregidas < 0:
+                    semanas_corregidas = 0
+
+                meses_corregidos = semanas_corregidas // 4
+                semanas_restantes = semanas_corregidas % 4
+
+                # ---------- Resultados ----------
+                st.success(f"Edad cronologica: {edad_cronologica.years} años, {edad_cronologica.months} meses y {edad_cronologica.days} días")
+
+                st.success(f"Edad corregida: {meses_corregidos} meses y {semanas_restantes} semanas")
+
+                # ---------- Recomendaciones ----------
+                if semanas_corregidas <= 104:
+                    st.info("Usar edad corregida para percentiles y desarrollo.")
+                else:
+                    st.warning("Ya no es necesario corregir la edad.")
+
+            except Exception:
+                st.error("Error en los datos. Verifica fechas y semanas de gestación.")
 # ================== PRONTO NUEVAS FUNCIONES ==================
-
-
 # ================== FOOTER ==================
 st.markdown("---")
 st.caption("HELEN M.O.R · Medicina & Ingeniería · Uso académico")

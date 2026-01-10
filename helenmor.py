@@ -94,14 +94,14 @@ if menu == "Inicio":
         st.image("helen_doctora.png",width=180)
 
     with col2:
-     st.header("HELEN M.O.R.")
-     st.write("¿Es un pájaro?¿Es un avión? No, es la heredera de I.V.A.N. MOR !!!")
-     st.write("""
-           HELEN M.O.R. es una plataforma clínica desarrollada con el fin de brindar herramientas
-              para estudio y cálculo de variables que se utilizan frecuentemente en el área de la salud
-              de una manera más sencilla.
-    """)
-     st.info("Selecciona un módulo en el menú lateral")
+        st.header("HELEN M.O.R.")
+        st.write("¿Es un pájaro?¿Es un avión? No, es la heredera de I.V.A.N. MOR !!!")
+        st.write("""
+            HELEN M.O.R. es una plataforma clínica desarrollada con el fin de brindar herramientas
+                para estudio y cálculo de variables que se utilizan frecuentemente en el área de la salud
+                de una manera más sencilla.
+        """)
+    st.info("Selecciona un módulo en el menú lateral")
 
 
 
@@ -122,8 +122,8 @@ elif menu == "respiratorio":
         st.header("Modulo de sistema respiratorio")
         st.info("Selecciona la herramienta clínica que necesitas en la caja de abajo.")
 
-    st.selectbox("Selecciona el cálculo",("Gases arteriales","Indice paquete-año","TEP")
-                 , key="respimodulo")
+        st.selectbox("Selecciona el cálculo",("Gases arteriales","Indice paquete-año","TEP")
+                    , key="respimodulo")
     
 
     #AQUI SE CALCULAN LOS GASES ARTERIALES
@@ -448,8 +448,8 @@ elif menu == "metabolico":
         st.header("Modulo de sistema metabólico-endocrino")
         st.info("Selecciona la herramienta clínica que necesitas en la caja de abajo.")
 
-    st.selectbox("Selecciona el cálculo",("IMC","Perfil lipídico","Sodio corregido")
-                 , key="metamodulo")
+        st.selectbox("Selecciona el cálculo",("IMC","Perfil lipídico","Sodio corregido")
+                    , key="metamodulo")
     
     
     #AQUI SE CALCULA EL IMC
@@ -697,8 +697,8 @@ elif menu == "nefro":
         st.header("Modulo de nefrología")
         st.info("Selecciona la herramienta clínica que necesitas en la caja de abajo.")
 
-    st.selectbox("Selecciona el cálculo",("KDIGO")
-                 , key="nefromodulo")
+        st.selectbox("Selecciona el cálculo",("KDIGO")
+                    , key="nefromodulo")
     
     #AQUI SE CALCULA EL KDIGO CON LA TFG
     if st.session_state.nefromodulo == "KDIGO":
@@ -859,8 +859,8 @@ elif menu == "gineco":
         st.header("Modulo de ginecobstetricia")
         st.info("Selecciona la herramienta clínica que necesitas en la caja de abajo.")
 
-    st.selectbox("Selecciona el cálculo",("FPP")
-                 , key="ginecomodulo")
+        st.selectbox("Selecciona el cálculo",("FPP")
+                    , key="ginecomodulo")
     
 
     #AQUI SE CALCULAN LOS GASES ARTERIALES
@@ -964,8 +964,8 @@ elif menu == "cardio":
         st.header("Modulo de Cardiología")
         st.info("Aquí puedes encontrar tanto cálculos como escalas clínicas referentes al sistema cardiovascular.")
 
-    st.selectbox("Selecciona el cálculo",("HTA","wifi","CHAD VASc","Escala Wells (TEP)","Escala Wells (TVP)")
-                 , key="cardiomodulo")
+        st.selectbox("Selecciona el cálculo",("HTA","wifi","CHAD VASc","Escala Wells (TEP)","Escala Wells (TVP)")
+                    , key="cardiomodulo")
     
     #AQUI SE CALCULA LA HTA CON LA TFG
     if st.session_state.cardiomodulo == "HTA":
@@ -1309,8 +1309,8 @@ elif menu == "hemato":
         st.header("Modulo de hematología")
         st.info("Selecciona la herramienta clínica que necesitas en la caja de abajo.")
 
-    st.selectbox("Selecciona el cálculo",("Clasificación morfológica de la anemia")
-                 , key="hematomodulo")
+        st.selectbox("Selecciona el cálculo",("Clasificación morfológica de la anemia")
+                     , key="hematomodulo")
     
 
     #AQUI SE CALCULAN LOS VALORES DEL VCM Y HCM
@@ -1405,7 +1405,7 @@ elif menu == "pediatria":
         st.header("Cálculos en pediatría")
         st.info("Selecciona la herramienta clínica que necesitas en la caja de abajo.")
 
-        st.selectbox("Selecciona el cálculo",("Liquidos mantenimiento","Disnatremias","DisKalemias")
+        st.selectbox("Selecciona el cálculo",("Liquidos mantenimiento","Disnatremias","DisKalemias","Edad corregida (prematuros)")
                     , key="submodulo")
     
 
@@ -1594,10 +1594,68 @@ elif menu == "pediatria":
 
                 st.success("Tiene el potasio normal")
 
+    # Calculo de edad corregida en prematuros
+    elif st.session_state.submodulo == "Edad corregida (prematuros)":
 
+        st.header("Edad corregida en recién nacidos prematuros")
+        st.info("Útil para evaluación del crecimiento y neurodesarrollo (hasta 24 meses)")
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            fecha_nacimiento = st.date_input(
+                "Fecha de nacimiento",
+                format="DD/MM/YYYY"
+            )
+
+            semanas_gestacion = st.number_input(
+                "Semanas de gestación al nacer",
+                min_value=22,
+                max_value=36,
+                value=32,
+                step=1
+            )
+
+        with col2:
+            fecha_evaluacion = st.date_input(
+                "Fecha de evaluación",
+                value=datetime.date.today(),
+                format="DD/MM/YYYY"
+            )
+
+        if st.button("Calcular edad corregida"):
+
+            try:
+                # ---------- Edad cronológica ----------
+                edad_cronologica = relativedelta(fecha_evaluacion, fecha_nacimiento)
+
+                semanas_crono = edad_cronologica.years * 52 + edad_cronologica.months * 4 + edad_cronologica.days // 7
+
+                # ---------- Corrección de edad ----------
+                semanas_prematuridad = 40 - semanas_gestacion
+                semanas_corregidas = semanas_crono - semanas_prematuridad
+
+                # Evitar valores negativos
+                if semanas_corregidas < 0:
+                    semanas_corregidas = 0
+
+                meses_corregidos = semanas_corregidas // 4
+                semanas_restantes = semanas_corregidas % 4
+
+                # ---------- Resultados ----------
+                st.success(f"Edad cronologica: {edad_cronologica.years} años, {edad_cronologica.months} meses y {edad_cronologica.days} días")
+
+                st.success(f"Edad corregida: {meses_corregidos} meses y {semanas_restantes} semanas")
+
+                # ---------- Recomendaciones ----------
+                if semanas_corregidas <= 104:
+                    st.info("Usar edad corregida para percentiles y desarrollo.")
+                else:
+                    st.warning("Ya no es necesario corregir la edad.")
+
+            except Exception:
+                st.error("Error en los datos. Verifica fechas y semanas de gestación.")
 # ================== PRONTO NUEVAS FUNCIONES ==================
-
-
 # ================== FOOTER ==================
 st.markdown("---")
 st.caption("HELEN M.O.R · Medicina & Ingeniería · Uso académico")
